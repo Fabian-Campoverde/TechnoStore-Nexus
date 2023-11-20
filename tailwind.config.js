@@ -4,13 +4,18 @@ import typography from '@tailwindcss/typography';
 
 /** @type {import('tailwindcss').Config} */
 export default {
+  presets: [
+    require('./vendor/wireui/wireui/tailwind.config.js')
+],
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './vendor/laravel/jetstream/**/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         "./node_modules/flowbite/**/*.js",
-        
+        './vendor/wireui/wireui/resources/**/*.blade.php',
+        './vendor/wireui/wireui/ts/**/*.ts',
+        './vendor/wireui/wireui/src/View/**/*.php'
     ],
     darkMode: 'class',
     theme: {
@@ -60,5 +65,7 @@ export default {
           },
     },
 
-    plugins: [require('flowbite/plugin'),forms, typography,  require('@tailwindcss/forms'),],
+    plugins: [require('flowbite/plugin'),forms, typography,  require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+],
 };

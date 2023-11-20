@@ -13,20 +13,22 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:admin.products.index")->only("index");
+        $this->middleware("can:admin.products.create")->only("create","store");
+        $this->middleware("can:admin.products.edit")->only("edit","update");
+        $this->middleware("can:admin.products.destroy")->only("destroy");
+
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $products = Product::paginate(10);
-        $categories= Category::all();
-
-        $categoriesWithCount = $categories->map(function ($category) {
-            $productCount = Product::where('category_id', $category->id)->count();
-            $category->productCount = $productCount;
-            return $category;
-        });
-        return view("admin.products.index", compact("products","categoriesWithCount"),);
+        
+        
+        return view("admin.products.index");
     }
 
     /**

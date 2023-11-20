@@ -315,19 +315,27 @@ return [
             'text'        => 'Dashboard',
             'route'         => 'admin.home',
             'icon'        => 'fas fa-fw fa-tachometer-alt',
-            
+            'can'=>'admin.home',
         ],
         [
             'text'        => 'Usuarios',
             'route'         => 'admin.users.index',
             'icon'        => 'fa fa-fw fa-users',
-            
+            'can'=>'admin.users.index',
+        ],
+        [
+            'text'        => 'Roles',
+            'route'         => 'admin.roles.index',
+            'icon'        => 'fa fa-fw fa-users-cog',
+            'can'=>'admin.roles.index',
         ],
         ['header' => 'ADMINISTRADOR'],
         [
             'text' => 'Categorias',
             'route'  => 'admin.categories.index',
             'icon' => 'far fa-fw fa-file-alt',
+            'can'=>'admin.categories.index',
+            'active'=>['admin/categories*'],
             'submenu' => [
                 [
                     'text' => 'Administrar Categorias',
@@ -343,6 +351,7 @@ return [
             'text' => 'Medidas',
             'route'  => 'admin.measures.index',
             'icon' => 'fa fa-fw fa-tags',
+            'can'=>'admin.measures.index',
             'submenu' => [
                 [
                     'text' => 'Administrar Medidas',
@@ -357,6 +366,7 @@ return [
             'text' => 'Proveedores',
             'route'  => 'admin.providers.index',
             'icon' => 'fas fa-fw fa-truck',
+
             'submenu' => [
                 [
                     'text' => 'Administrar Proveedores',
@@ -371,6 +381,7 @@ return [
             'text' => 'Productos',
             'route'  => 'admin.products.index',
             'icon' => 'fa fa-fw fa-cubes',
+            'can'=>'admin.products.index',
             'submenu' => [
                 [
                     'text' => 'Gestion de Productos',

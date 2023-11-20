@@ -9,12 +9,20 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:admin.categories.index")->only("index");
+        $this->middleware("can:admin.categories.create")->only("create","store");
+        $this->middleware("can:admin.categories.edit")->only("edit","update");
+        $this->middleware("can:admin.categories.destroy")->only("destroy");
+
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = Category::paginate(5);
+        $categories = Category::paginate();
         return view("admin.categories.index",compact("categories"));
     }
 

@@ -9,12 +9,20 @@ use Illuminate\Http\Request;
 
 class ProviderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:admin.providers.index")->only("index");
+        $this->middleware("can:admin.providers.create")->only("create","store");
+        $this->middleware("can:admin.providers.edit")->only("edit","update");
+        $this->middleware("can:admin.providers.destroy")->only("destroy");
+
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $providers = Provider::paginate(5);
+        $providers = Provider::paginate();
         return view("admin.proveedores.index", compact("providers"));
     }
 

@@ -9,12 +9,20 @@ use Illuminate\Http\Request;
 
 class MeasureController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:admin.measures.index")->only("index");
+        $this->middleware("can:admin.measures.create")->only("create","store");
+        $this->middleware("can:admin.measures.edit")->only("edit","update");
+        $this->middleware("can:admin.measures.destroy")->only("destroy");
+
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $measures = Measure::paginate(7);
+        $measures = Measure::paginate();
         return view("admin.medidas.index", compact("measures"));
     }
 

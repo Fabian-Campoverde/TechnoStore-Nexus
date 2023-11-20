@@ -65,7 +65,7 @@
                                 Export
                             </button>
                               
-                              <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown" class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button">
+                              <button  id="filterDropdownButton" data-dropdown-toggle="filterDropdown" class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-4 h-4 mr-2 text-gray-400" viewbox="0 0 20 20" fill="currentColor">
                                   <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
                                 </svg>
@@ -78,23 +78,21 @@
                               <!-- Dropdown menu -->
                               <div id="filterDropdown" class="z-10 hidden w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
                                 <h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">
-                                  Categoria
+                                  Roles
                                 </h6>
-                                <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
-                                  
-                                  @foreach ($rolesWithCount as $item)
-                              <li class="flex items-center">
-                                <input id="apple" type="checkbox" value=""
-                                  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                <label for="apple" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                                  {{$item->name}} ({{$item->user_count}})
-                                </label>
-                              </li>
-                              @endforeach
-                                
-                                  
-                                  
-                                </ul>
+                                <form wire:submit.prevent="filterUsers">
+                                  <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
+                                      @foreach ($rolesWithCount as $item)
+                                          <li class="flex items-center">
+                                              <input wire:model.defer="selectedRoles" wire:change="filterUsers" id="{{$item->name}}" type="checkbox" value="{{$item->id}}"
+                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                                              <label for="{{$item->name}}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                  {{$item->name}} ({{$item->user_count}})
+                                              </label>
+                                          </li>
+                                      @endforeach
+                                  </ul>
+                              </form>
                               </div>
                               
                             </div>
@@ -126,7 +124,7 @@
                         Email
                     </th>
                     <th scope="col" class="px-6 py-3 text-center">
-                      Roles
+                        Roles
                   </th>
                     <th scope="col" class="px-6 py-3 text-center">
                         Estado
@@ -149,7 +147,9 @@
                     </td> --}}
                     <th scope="row" class=" flex items-center px-6 py-4  text-left text-gray-900 whitespace-nowrap dark:text-white">
                         
-                        <img class="w-10 h-10 rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNqCW1BmOGq5_Z-OLOXCv9SDMhbY7G9gh1HQ&usqp=CAU" alt="Jese image">
+                      <div class="mr-2">
+                        <img class="w-10 h-10 rounded-full" src="{{asset($user->image_url)}}"/>
+                    </div>
                         <div class="pl-3">
                             <div class="text-base font-semibold">{{$user->name}}</div>
                             <div class="font-normal text-gray-500">{{$user->nickname}}</div>
@@ -181,14 +181,15 @@
                                 </svg>
                             </div>
                             <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                <a href="#" > 
+                                <a  href="{{ route('admin.users.edit', ['user' => $user->id]) }}" > 
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                 </svg>
                             </a>
                             </div>
                             <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                <form class="form-delete" method="POST" action="" x-data>
+                                <form class="form-delete" method="POST" 
+                                action="{{ route('admin.users.destroy', ['user' => $user->id]) }}" x-data>
                                     @csrf
                                     {{ method_field("DELETE")}}
                                     <input type="hidden" name="user_name" value="{{$user->name}}">

@@ -6,10 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:admin.users.index")->only("index");
+        $this->middleware("can:admin.users.create")->only("create","store");
+        $this->middleware("can:admin.users.edit")->only("edit","update");
+        $this->middleware("can:admin.users.destroy")->only("destroy");
+
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -23,9 +35,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        $users= new User();
+        $user= new User();
         $roles= Role::all();
-        return view("admin.users.create",compact("users","roles"));
+        return view("admin.users.create",compact("user","roles"));
     }
 
     /**
@@ -38,7 +50,7 @@ class UserController extends Controller
                 "name"=> $request->name,
                 "nickname"=> $request->nickname,
                 "email"=> $request->email,
-                "password"=> bcrypt($request->contra)
+                "password"=> bcrypt($request->password)
                 
             ]);
             if ($request->has("image_url")) {
@@ -77,22 +89,79 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        
+        $roles= Role::all();  
+        return view("admin.users.create",compact("user","roles"));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'nickname' => 'required|unique:users,nickname,' . $user->id,
+            'password' => 'min:6',
+        ]);
+        try {
+
+            
+            $data=$request->all();
+            if ($request->filled('password')) {
+                $data['password'] = bcrypt($request->password);
+            }
+            
+            if ($request->has("image_url")) {
+                if ($user->image_url) {
+                    Storage::delete($user->image_url);
+                }
+            
+                $image_path = $request->file("image_url")->store("medias");
+                $data["image_url"] = $image_path;
+            }
+            $user->fill($data);
+            $user->roles()->sync($request->roles);
+            $user->save();
+           
+           return redirect()->route("admin.users.index")->with(
+            [
+                "message"=> "Usuario actualizado con exito",
+                "status"=>"success",
+                "color"=>"green"
+            ]
+        );
+        } catch (\Throwable $th) {
+            
+            return redirect()->route("admin.users.index")->with(
+                [
+                    "message"=> "Error al actualizar usuario ",
+                    "status"=>"success",
+                    "color"=>"red"
+                ]);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        try {
+            $user->delete();
+            $result= [
+                "message"=> "Usuario eliminado con exito",
+                "status"=>"success",
+                "color"=>"gray"
+            ];
+        } catch (\Throwable $th) {
+            $result = [
+                "message"=> "Usuario no puede ser eliminado",
+                "status"=>"error",
+                "color"=>"red"
+            ];
+        }
+        
+        return redirect()->route("admin.users.index")->with($result);
     }
 }
