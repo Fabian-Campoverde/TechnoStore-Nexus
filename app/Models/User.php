@@ -31,7 +31,8 @@ class User extends Authenticatable
         'email',
         'password',
         'nickname',
-        'image_url'
+        'image_url',
+        'profile_photo_path'
     ];
 
     /**
@@ -63,4 +64,15 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function adminlte_image()
+    {
+        // Acceder al campo 'image_url' del usuario autenticado
+        return 'https://picsum.photos/300/300'; 
+    }
+
+    public function adminlte_profile_url()
+    {
+        return 'profile/username';
+    }
 }

@@ -1,10 +1,10 @@
 <div>
-    <br>
+    
 
 
     <div class="py-120">
 
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+{{-- <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
     <a href="{{route('admin.products.create')}}" class="inline-flex items-center px-4 py-2 
     bg-gray-800 border border-transparent rounded-md font-semibold text-xs 
     text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 
@@ -13,7 +13,7 @@
         {{ __('Agregar nuevo producto') }}
         </a>
         
-</div>
+</div> --}}
 
 
    
@@ -67,7 +67,7 @@
                             <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                               <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                             </svg>
-                            Agregar Usuario
+                            Agregar Producto
                           </a>
                         <div class="flex items-center w-full space-x-3 md:w-auto">
                           <button type="button" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
@@ -140,18 +140,22 @@
                 <th scope="col" class="px-6 py-3 text-center">
                     Medida
                 </th>
-                <th scope="col" class="px-6 py-3 text-center">
-                    Precio de Compra
-                </th>
-                <th scope="col" class="px-6 py-3 text-center">
-                    Precio de Venta
-                </th>
+                
                 <th scope="col" class="px-6 py-3 text-center">
                     Stock
                 </th>
                 <th scope="col" class="px-6 py-3 text-center">
                   Stock de Alerta
               </th>
+              <th scope="col" class="px-6 py-3 text-center">
+                Precio de Compra
+            </th>
+            <th scope="col" class="px-6 py-3 text-center">
+                Precio de Venta
+            </th>
+              <th scope="col" class="px-6 py-3 text-center">
+                Estado
+            </th>
                 <th scope="col" class="px-6 py-3 text-center">
                     Acciones
                 </th>
@@ -174,7 +178,8 @@
                 <th scope="row" class=" flex items-center px-6 py-4  text-left text-gray-900 whitespace-nowrap dark:text-white">
                         
                   <div class="mr-2">
-                    <img class="w-10 h-10 rounded-full" src="{{asset($product->image_url)}}"/>
+                    <img class="w-10 h-10 rounded-pill zoom" src="{{asset($product->image_url)}}" 
+                    />
                 </div>
                     <div class="pl-3">
                         <div class="text-base font-semibold">{{$product->nombre}}</div>
@@ -183,10 +188,32 @@
                     
                 </th>
                 <td class="px-6 py-4 text-center">
-                    {{$product->category->nombre}}
+                    <span class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                        {{$product->category->nombre}}    </span>
+                    
                 </td>
                 <td class="px-6 py-4 text-center">
                     {{$product->measure->nombre}}
+                </td>
+                @php
+                    if ($product->stock>$product->stock_minimo ) {
+                        $color= "green";
+                    }
+                    else{
+                        $color= "red";
+                    }
+                @endphp
+                <td class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <div class="flex items-center">
+                        <div class="inline-block w-4 h-4 mr-2 bg-{{$color}}-700 rounded-full"></div>
+                        {{$product->stock}}
+                    </div>
+                </td>
+                {{-- <td class="px-6 py-4 text-center">
+                  {{$product->stock}}
+              </td> --}}
+                <td class="px-6 py-4 text-center">
+                    {{$product->stock_minimo}}
                 </td>
                 <td class="px-6 py-4 text-center">
                     S/. {{$product->precio_compra}}
@@ -195,11 +222,23 @@
                     S/. {{$product->precio_venta}}
                 </td>
                 <td class="px-6 py-4 text-center">
-                  {{$product->stock}}
-              </td>
-                <td class="px-6 py-4 text-center">
-                    {{$product->stock_minimo}}
-                </td>
+                    @if ($product->estado==="A")
+                    <span
+                    class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600"
+                  >
+                    <span class="h-1.5 w-1.5 rounded-full bg-green-600"></span>
+                    Activo
+                  </span>
+                    @else
+
+                    <span
+                      class="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600"
+                    >
+                      <span class="h-1.5 w-1.5 rounded-full bg-red-600"></span>
+                      Inactivo
+                    </span>
+                    @endif
+                  </td>
                 {{-- <td class="flex items-center px-6 py-4 space-x-3">
                     <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                     <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a>

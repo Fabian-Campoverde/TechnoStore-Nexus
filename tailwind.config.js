@@ -15,7 +15,8 @@ export default {
         "./node_modules/flowbite/**/*.js",
         './vendor/wireui/wireui/resources/**/*.blade.php',
         './vendor/wireui/wireui/ts/**/*.ts',
-        './vendor/wireui/wireui/src/View/**/*.php'
+        './vendor/wireui/wireui/src/View/**/*.php',
+       
     ],
     darkMode: 'class',
     theme: {

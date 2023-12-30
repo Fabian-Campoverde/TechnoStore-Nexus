@@ -28,6 +28,7 @@ class ProductUpdateRequest extends FormRequest
             "precio_compra"=> "required|numeric|min:0",
             "precio_venta"=> "required|numeric|min:0",
             "category_id"=> "required|numeric",
+            "brand_id"=> "required|numeric",
             "measure_id"=> "required|numeric",
             "stock_minimo"=> "numeric|min:0",
             "descripcion"=> "required|max:300",

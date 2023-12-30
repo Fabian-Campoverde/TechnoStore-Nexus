@@ -22,8 +22,8 @@ class ProviderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "razon_social"=> "required",
-            "ruc"=> "required|numeric|min:0|max:99999999999",
+            "razon_social"=> "required|unique:providers",
+            "ruc"=> "required|numeric|min:0|max:99999999999|unique:providers",
             "nombre"=> "required",
             "telefono"=> "required|numeric|min:0|max:999999999",
             "direccion"=> "required",

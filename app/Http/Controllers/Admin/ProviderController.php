@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProviderRequest;
+use App\Http\Requests\ProviderUpdateRequest;
 use App\Models\Provider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProviderController extends Controller
 {
@@ -40,6 +42,7 @@ class ProviderController extends Controller
      */
     public function store(ProviderRequest $request)
     {
+  
         $data= $request->all();
          Provider::create($data);
          return redirect()->route("admin.providers.index")->with(
@@ -70,8 +73,9 @@ class ProviderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Provider $provider)
+    public function update(ProviderUpdateRequest $request, Provider $provider)
     {
+       
         $data= $request->all();
         $provider->fill($data);
         $provider->save();
@@ -106,6 +110,37 @@ class ProviderController extends Controller
         
         return redirect()->route("admin.providers.index")->with($result);
     }
+    public function obtenerProveedores(Request $request)
+{
+    $proveedoresQuery = Provider::query()
+        ->select('id', 'nombre', 'ruc')
+        ->orderBy('nombre');
 
+    if ($request->has('search')) {
+        $searchTerm = $request->input('search');
+        $proveedoresQuery->where('nombre', 'like', "%$searchTerm%")
+                        ->orWhere('ruc', 'like', "%$searchTerm%");
+    }
+
+    if ($request->exists('selected')) {
+        $selected = $request->input('selected', []);
+        $proveedoresQuery->whereIn('id', $selected);
+    } else {
+        $proveedoresQuery->limit(2);
+    }
+
+    $proveedores = $proveedoresQuery->get();
+
+    $proveedoresFormateados = $proveedores->map(function ($proveedor) {
+        return [
+            'value' => $proveedor->id,
+            'label' => $proveedor->nombre,
+            'description' => $proveedor->ruc,
+            
+        ];
+    });
+
+    return response()->json($proveedoresFormateados);
+}
     
 }

@@ -46,7 +46,7 @@ class CategoryController extends Controller
             [
                 "message"=> "Categoria creada con exito",
                 "status"=>"success",
-                "color"=>"green"
+                "color"=>"A4CF79"
             ]
         );
     }
@@ -80,7 +80,7 @@ class CategoryController extends Controller
             [
                 "message"=> "Categoria actualizada con exito",
                 "status"=>"success",
-                "color"=>"blue"
+                "color"=>"79B9CF"
             ]
         );
     }
@@ -96,19 +96,24 @@ class CategoryController extends Controller
             $result= [
                 "message"=> "Categoria eliminada con exito",
                 "status"=>"success",
-                 "color"=>"gray"
+                 "color"=>"B86364"
             ];
         } catch (\Throwable $th) {
             $result = [
                 "message"=> "Categoria no puede ser eliminada por asociacion ",
                 "status"=>"error",
-                "color"=>"red"
+                "color"=>"E41D1F"
             ];
         }
         
         return redirect()->route("admin.categories.index")->with($result);
     }
 
-    
+    public function status(Request $request,Category $category)
+{
+    $category->estado = $request->estado;
+    $category->save();
+    return response()->json(['message' => 'Categoría modificada exitosamente']);
+}
 
 }

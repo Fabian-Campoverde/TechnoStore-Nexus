@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>MARAVI</b>',
+    'logo_img' => 'vendor/adminlte/dist/img/fondotienda.jpg',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/fondotienda.jpg',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -109,7 +109,7 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/fondotienda.jpg',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -130,7 +130,7 @@ return [
     */
 
     'usermenu_enabled' => true,
-    'usermenu_header' => false,
+    'usermenu_header' => true,
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => false,
     'usermenu_desc' => false,
@@ -288,63 +288,73 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Menu-Configuration
     |
     */
+    
 
     'menu' => [
         // Navbar items:
-        [
-            'type'         => 'navbar-search',
-            'text'         => 'Buscar...',
-            'topnav_right' => true,
-        ],
-        [
-            'type'         => 'fullscreen-widget',
-            'topnav_right' => true,
-        ],
+        // [
+        //     'type'         => 'navbar-search',
+        //     'text'         => 'Buscar...',
+        //     'topnav_right' => true,
+        // ],
+        // [
+        //     'type'         => 'fullscreen-widget',
+        //     'topnav_right' => true,
+        // ],
 
-        // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'Buscar...',
-        ],
+        // // Sidebar items:
+       
         [
             'text' => 'blog',
+            
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
         [
+            'key'  => 'pages',
             'text'        => 'Dashboard',
             'route'         => 'admin.home',
             'icon'        => 'fas fa-fw fa-tachometer-alt',
             'can'=>'admin.home',
         ],
+        ['header' => 'ADMINISTRADOR',
+        'can'=>'admin.users.index'],
         [
             'text'        => 'Usuarios',
             'route'         => 'admin.users.index',
             'icon'        => 'fa fa-fw fa-users',
             'can'=>'admin.users.index',
         ],
+        
         [
             'text'        => 'Roles',
             'route'         => 'admin.roles.index',
-            'icon'        => 'fa fa-fw fa-users-cog',
+            'icon'        => 'fa fa-fw fa-key',
             'can'=>'admin.roles.index',
         ],
-        ['header' => 'ADMINISTRADOR'],
+         ['header' => 'LOGISTICA'],
+         [
+            'text' => 'Almacenes',
+            'route'  => 'admin.stores.index',
+            'icon' => 'fas fa-fw fa-warehouse',
+            'can'=>'admin.measures.index',
+            
+        ],
         [
             'text' => 'Categorias',
             'route'  => 'admin.categories.index',
             'icon' => 'far fa-fw fa-file-alt',
             'can'=>'admin.categories.index',
             'active'=>['admin/categories*'],
-            'submenu' => [
-                [
-                    'text' => 'Administrar Categorias',
-                    'route'  => 'admin.categories.index',
-                ],
-                [
-                    'text' => 'Crear Categorias',
-                    'route'  => 'admin.categories.create',
-                ],]
+            // 'submenu' => [
+            //     [
+            //         'text' => 'Administrar Categorias',
+            //         'route'  => 'admin.categories.index',
+            //     ],
+            //     [
+            //         'text' => 'Crear Categorias',
+            //         'route'  => 'admin.categories.create',
+            //     ],]
 
         ],
         [
@@ -352,30 +362,37 @@ return [
             'route'  => 'admin.measures.index',
             'icon' => 'fa fa-fw fa-tags',
             'can'=>'admin.measures.index',
-            'submenu' => [
-                [
-                    'text' => 'Administrar Medidas',
-                    'route'  => 'admin.measures.index',
-                ],
-                [
-                    'text' => 'Crear Medidas',
-                    'route'  => 'admin.measures.create',
-                ],]
+            // 'submenu' => [
+            //     [
+            //         'text' => 'Administrar Medidas',
+            //         'route'  => 'admin.measures.index',
+            //     ],
+            //     [
+            //         'text' => 'Crear Medidas',
+            //         'route'  => 'admin.measures.create',
+            //     ],]
+        ],
+        [
+            'text' => 'Marcas',
+            'route'  => 'admin.brands.index',
+            'icon' => 'fas fa-fw fa-store',
+            'can'=>'admin.measures.index',
+            
         ],
         [
             'text' => 'Proveedores',
             'route'  => 'admin.providers.index',
             'icon' => 'fas fa-fw fa-truck',
 
-            'submenu' => [
-                [
-                    'text' => 'Administrar Proveedores',
-                    'route'  => 'admin.providers.index',
-                ],
-                [
-                    'text' => 'Crear Proveedores',
-                    'route'  => 'admin.providers.create',
-                ],]
+            // 'submenu' => [
+            //     [
+            //         'text' => 'Administrar Proveedores',
+            //         'route'  => 'admin.providers.index',
+            //     ],
+            //     [
+            //         'text' => 'Crear Proveedores',
+            //         'route'  => 'admin.providers.create',
+            //     ],]
         ],
         [
             'text' => 'Productos',
@@ -388,8 +405,23 @@ return [
                     'route'  => 'admin.products.index',
                 ],
                 [
-                    'text' => 'Gestion de Existencias',
+                    'text' => 'Creacion de Productos',
                     'route'  => 'admin.products.create',
+                ],]
+        ],
+        [
+            'text' => 'Compras',
+            'route'  => 'admin.inputs.index',
+            'icon' => 'fas fa-fw fa-shopping-bag',
+           
+            'submenu' => [
+                [
+                    'text' => 'Entradas de Productos',
+                    'route'  => 'admin.inputs.index',
+                ],
+                [
+                    'text' => 'Detalles de Entradas',
+                    'route'  => 'admin.inputs.create',
                 ],]
         ],
         [

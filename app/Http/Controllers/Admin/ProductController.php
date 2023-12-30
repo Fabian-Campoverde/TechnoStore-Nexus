@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Measure;
 use App\Models\Product;
@@ -24,11 +25,13 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    
     public function index()
     {
-        
-        
-        return view("admin.products.index");
+        $products = Product::all();
+       
+        return view("admin.products.index",compact('products'));
     }
 
     /**
@@ -36,10 +39,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories= Category::all();
-        $measures = Measure::all();
+        $categories = Category::where('estado', 'A')->get();
+        $measures = Measure::where('estado', 'A')->get();
+        $brands = Brand::where('estado', 'A')->get();
         $product = new Product();
-        return view("admin.products.create", compact("categories","measures","product"));
+        return view("admin.products.create", compact("categories","measures","product","brands"));
     }
 
     /**
@@ -48,6 +52,8 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data=$request->all();
+         
+        
         if($request->has("image_url")){
         $image_path=$request->file("image_url")->store("medias");
         $data["image_url"]=$image_path;
@@ -75,9 +81,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $categories= Category::all();
-        $measures = Measure::all();
-        return view("admin.products.create", compact("categories","measures","product"));
+        $categories = Category::where('estado', 'A')->get();
+        $measures = Measure::where('estado', 'A')->get();
+        $brands = Brand::where('estado', 'A')->get();
+        return view("admin.products.create", compact("categories","measures","product","brands"));
     }
 
     /**
@@ -123,5 +130,12 @@ class ProductController extends Controller
         }
         
         return redirect()->route("admin.products.index")->with($result);
+    }
+
+    public function status(Request $request,Product $product)
+    {
+        $product->estado = $request->estado;
+        $product->save();
+        return response()->json(['message' => 'Producto modificado exitosamente']);
     }
 }

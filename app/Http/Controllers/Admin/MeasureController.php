@@ -105,4 +105,11 @@ class MeasureController extends Controller
         }
         return redirect()->route("admin.measures.index")->with($result);
     }
+
+    public function status(Request $request,Measure $measure)
+{
+    $measure->estado = $request->estado;
+    $measure->save();
+    return response()->json(['message' => 'Medida modificada exitosamente']);
+}
 }
