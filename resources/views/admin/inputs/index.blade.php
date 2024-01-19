@@ -6,6 +6,10 @@
     <h1 class="text-2xl font-semibold text-white uppercase">Entrada de Productos</h1>
   </div>
 @endsection
+@section('css-new')
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+@endsection
 @section('container-new')
 <div class="py-120">
    
@@ -21,98 +25,74 @@
             </a>
 
         </div>
-<!-- Main modal -->
-<div id="readProductModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center md:inset-8 w-full h-full"
-style="margin-top: 50px;  margin-left: 80px;">
-    <div class="relative p-4 max-w-4xl h-full mx-auto">
-        <!-- Modal content -->
-        <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-            <!-- Modal header -->
-            <div class="flex justify-between mb-4 rounded-t sm:mb-5">
-                <div class="flex items-center justify-center w-full">
-                    <div class="w-full max-w-3xl">
-                        <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                            <h3 class="text-lg font-bold text-gray-900 dark:text-white">
-                                ENTRADA DE PRODUCTOS - # <span id="inputID"></span>
-                            </h3>
-                        </div>
-                        <div class="flex justify-center items-center mt-4">
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div>
-                                    <label for="cliente" class="font-semibold">Proveedor</label>
-                                    <p id="inputProv" class="text-gray-700"></p>
-                                </div>
-                                <div>
-                                    <label for="tipo" class="font-semibold">Fecha</label>
-                                    <p id="inputFecha" class="text-gray-700"></p>
-                                </div>
-                                <div>
-                                    <label for="folio" class="font-semibold">Comprobante</label>
-                                    <p id="inputComprobante" class="text-gray-700"></p>
-                                </div>
-                                
+
+        <div class="modal fade " id="readModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="margin-left: 40px; ">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+                        ENTRADA DE PRODUCTOS - # <span id="inputID"></span>
+                    </h3>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <div class="flex justify-center items-center mt-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label for="cliente" class="font-semibold">Proveedor</label>
+                                <p id="inputProv" class="text-gray-700"></p>
                             </div>
+                            <div>
+                                <label for="tipo" class="font-semibold">Fecha de Compra   </label>
+                                <p id="inputFecha" class="text-center items-center text-gray-700"></p>
+                            </div>
+                            <div>
+                                <label for="folio" class="font-semibold">Comprobante</label>
+                                <p id="inputComprobante" class="text-gray-700"></p>
+                            </div>
+                            
                         </div>
                     </div>
+                    <div class="p-4 mt-6 lg:mt-0 overflow-x-auto">
+                        <table style="width:100%; padding-top: 1em; padding-bottom: 1em;" id="modal" class="stripe hover w-full table-auto p-2">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-center">Codigo Producto</th>
+                                    <th scope="col" class="px-6 py-3 text-center">Producto</th>
+                                    <th scope="col" class="px-6 py-3 text-center">Cantidad</th>
+                                    <th scope="col" class="px-6 py-3 text-center">Precio</th>
+                                    <th scope="col" class="px-6 py-3 text-center">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inputDetails">                   
+                               
+                            </tbody>
+                            <tfoot>
+                                <tr class="font-semibold text-gray-900 dark:text-white">
+                                    <th scope="row" class="px-6 py-3 text-center">Total</th>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="px-6 py-3"></td>
+                                    <td id="inputTotal" class="px-6 py-3"></td>
+                                </tr>
+                                </tfoot>
+                        </table>
+                    </div>
                 </div>
-                <div>
-                    <button type="button" id="close-read" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="readProductModal">
-                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                        <span class="sr-only close">Close modal</span>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">                    
+                        Cancelar
                     </button>
+                  
+                
                 </div>
-            </div>
-                           
-            <div class="p-4 mt-6 lg:mt-0 overflow-x-auto">
-                <table style="width:100%; padding-top: 1em; padding-bottom: 1em;" id="modal" class="stripe hover w-full table-auto p-2">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-center">Codigo Producto</th>
-                            <th scope="col" class="px-6 py-3 text-center">Producto</th>
-                            <th scope="col" class="px-6 py-3 text-center">Cantidad</th>
-                            <th scope="col" class="px-6 py-3 text-center">Precio</th>
-                            <th scope="col" class="px-6 py-3 text-center">Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody id="inputDetails">                   
-                        {{-- <tr>
-                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center">000000</td>
-                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center">Lapicero Pilot  </td>
-                            <td class="px-6 py-4 text-center">3</td>
-                            <td class="px-6 py-4 text-center">4</td>
-                            <td class="px-6 py-4 text-center">5</td>                              
-                        </tr>                                --}}
-                    </tbody>
-                    <tfoot>
-                        <tr class="font-semibold text-gray-900 dark:text-white">
-                            <th scope="row" class="px-6 py-3 text-center">Total</th>
-                            <td></td>
-                            <td></td>
-                            <td class="px-6 py-3"></td>
-                            <td id="inputTotal" class="px-6 py-3"></td>
-                        </tr>
-                        </tfoot>
-                </table>
-            </div>
-            <br>
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-3 sm:space-x-4">
-                    <button type="button" class="hidden text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                        <svg aria-hidden="true" class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
-                        Edit
-                    </button>               
-                    <button type="button" class="hidden py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                        Preview
-                    </button>
-                </div>              
-                <button type="button" class=" hidden inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
-                    <svg aria-hidden="true" class="w-5 h-5 mr-1.5 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                    Delete
-                </button>
+              </div>
             </div>
         </div>
-    </div>
-</div>
+
 
 
 
@@ -122,25 +102,7 @@ style="margin-top: 50px;  margin-left: 80px;">
         
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         
-            @if (session('status'))
-            <br>
-            <div id="alert-1" class="flex items-center p-4 mb-4 text-{{session('color')}}-800 rounded-lg bg-{{session('color')}}-50"  role="alert">
-                <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <span class="sr-only">Info</span>
-                <div class="ml-3 text-sm font-medium">
-                    {{ session('message') }}
-                </div>
-                  <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-dark-50 text-dark-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target='#alert-1' aria-label='Close' >
-                    <span class="sr-only">Close</span>
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                </button>
-              </div>
-            <br>
-        @endif 
+           
         
         
 	<!--Container-->
@@ -179,7 +141,7 @@ style="margin-top: 50px;  margin-left: 80px;">
 						<td class="px-6 py-4">
                             <div class="flex item-center justify-center">
                             <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                <button class="inline-flex items-center readProductButton" id="readProductButton" data-input-id="{{ $input->id }}" data-modal-target="readProductModal" data-modal-toggle="readProductModal">
+                                <button class="inline-flex items-center readProductButton" id="readProductButton" data-input-id="{{ $input->id }}" data-toggle="modal" data-target="#readModal">
                           <svg class="w-5 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -235,10 +197,26 @@ style="margin-top: 50px;  margin-left: 80px;">
 @endsection
 
 @section('js-new')
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    
-</script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+@if (session('status'))
+            <script>
+                
+                Toastify({
+            text: '{{ session('message') }}', // Mensaje del toast desde la sesión
+            duration: 1500, // Duración del toast en milisegundos (en este caso, 1.5 segundos)
+            close: false, // Mostrar botón de cierre
+            gravity: 'top', // Posición del toast 
+            position: 'right', // Alineación del toast 
+            offset: {
+    x: 10, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+    y: 50 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+  },
+            backgroundColor: '#{{ session('color') }}', // Color de fondo del toast
+        }).showToast();
+            </script>
+        @endif
 <script>
    $(document).ready(function() {
     var table;
@@ -406,7 +384,7 @@ style="margin-top: 50px;  margin-left: 80px;">
             .responsive.recalc();
                 table.draw();
                
-                    $('#readProductModal').removeClass('hidden');
+                    $('#readModal').removeClass('hidden');
                 },
                 error: function(xhr, status, error) {
                     console.error(error);

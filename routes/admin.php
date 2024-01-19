@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\BuyerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\InputController;
+use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\MeasureController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProviderController;
@@ -32,6 +34,10 @@ Route::put('admin/brands/{brand}/status', [BrandController::class,'status'])->na
 Route::resource("/stores",StoreController::class)->names("admin.stores");
 Route::put('admin/stores/{store}/status', [StoreController::class,'status'])->name('admin.stores.status');
 
+Route::resource("/buyers",BuyerController::class)->names("admin.buyers");
+
+
+Route::resource("/invoices",InvoiceController::class)->names("admin.invoices");
 
 Route::resource("/users",UserController::class)->names("admin.users");
 

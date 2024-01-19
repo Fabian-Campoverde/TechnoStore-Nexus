@@ -7,7 +7,7 @@
     </div>
 @endsection
 @section('css-new')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 @endsection
 @section('container-new')
@@ -57,9 +57,9 @@
         </div>
         <div class="modal-footer">
             
-        <button  type="button" class="btn btn-danger" data-dismiss="modal">
-    <span class="d-none d-sm-block">Cancelar</span>
-          </button>
+            <button type="button" data-dismiss="modal" class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">                    
+                Cancelar
+            </button>
           <label for="btnSubmit" class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" style="cursor: pointer;">
             <input id="btnSubmit" type="button" onclick="validarAdd()" class="hidden">
             Añadir
@@ -106,10 +106,9 @@
             </form>
         </div>
         <div class="modal-footer">
-            
-        <button  type="button" class="btn btn-danger" data-dismiss="modal">
-    <span class="d-none d-sm-block">Cancelar</span>
-          </button>
+            <button type="button" data-dismiss="modal" class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">                    
+                Cancelar
+            </button>
           <label for="btnSubmitEdit" class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" style="cursor: pointer;">
             <input id="btnSubmitEdit" type="button" onclick="validarEdit()" class="hidden">
             Actualizar
@@ -481,7 +480,7 @@ $('#example tbody').on('click', '.activar', function() {
                 // Obtener los valores de los campos
                 const nombreEdit = document.getElementById('nombreEdit').value.trim();
                 const direccionEdit = document.getElementById('direccionEdit').value.trim();
-                if (nombreEdit === '' || nombreEdit==='') {
+                if (nombreEdit === '' || direccionEdit==='') {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',

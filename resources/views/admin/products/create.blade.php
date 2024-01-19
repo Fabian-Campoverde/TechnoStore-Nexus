@@ -66,7 +66,22 @@
         @endif
             @csrf
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="sm:col-span-2">
+                <div class="w-full">
+                    <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Almacen</label>
+                    <select name="store_id" id="store_id" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <option value="">Selecciona almacen</option>
+                        @foreach ($stores as $s)
+                        <option value="{{$s->id}}"
+                            @if (old('store_id',$product->store_id) == $s->id) selected @endif>{{$s->nombre}}</option>
+                        @endforeach
+                      
+                    </select>
+                    @error('brand_id')
+                <span class=" text-sm text-red-600" role="alert">
+                    <strong>{{$message}}</strong>
+                @enderror
+                </div>
+                <div class="w-full">
                     <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Codigo</label>
                     <input type="text" value="{{old('codigoId',$product->codigoId)}}"
                      name="codigoId" id="codigoId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="AB0001" >
@@ -75,6 +90,7 @@
                         <strong>{{$message}}</strong>
                     @enderror
                 </div>
+                
                 <div class="w-full">
                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre/Descripcion del Producto</label>
                     <input type="text" value="{{old('nombre',$product->nombre)}}"
@@ -86,7 +102,7 @@
                 </div>
                 <div class="w-full">
                     <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Marca</label>
-                    <select name="brand_id" id="brand_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                    <select name="brand_id" id="brand_id" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                         <option value="">Selecciona marca</option>
                         @foreach ($brands as $b)
                         <option value="{{$b->id}}"
@@ -242,7 +258,7 @@
             <div class="text-right">
                 @if ($product->id)
                 <label for="btnSubmit" class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" style="cursor: pointer;">
-                    <input id="btnSubmit" type="button" onclick="validarFormEdit()" class="hidden">
+                    <input id="btnSubmit" type="button" onclick="validarFormEdit({{$product->id}})" class="hidden">
                     Actualizar
                     <i class="fas fa-edit ml-2"></i>
                 </label>
@@ -280,6 +296,10 @@
                 width: '100%',
                 
             });
+            $('#store_id').select2({
+                width: '100%',
+                
+            });
         });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -300,27 +320,86 @@
         const precio_compra = document.getElementById('precio_compra').value.trim();
         const precio_venta = document.getElementById('precio_venta').value.trim();
         const measure_id = document.getElementById('measure_id').value.trim();
+        const brand_id = document.getElementById('brand_id').value.trim();
         const category_id = document.getElementById('category_id').value.trim();
+        const store_id = document.getElementById('store_id').value.trim();
         const stock_minimo = document.getElementById('stock_minimo').value.trim();
         const descripcion = document.getElementById('descripcion').value.trim();
 
         // Verificar si algún campo está vacío o tiene valor 0
         if (nombre === '' || codigoId === '' || image_url === '' || stock === '' || precio_compra === null|| precio_compra<0
-        || precio_venta === null || precio_venta<0 || measure_id === '' || category_id === '' || stock_minimo === '' || descripcion === '' ) {
+        || precio_venta === null || precio_venta<0 || measure_id === '' || brand_id ==='' || category_id === '' 
+        || stock_minimo === '' || descripcion === '' || store_id === '') {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Por favor, completa todos los campos antes de continuar.',
             });
-        } else {
-            const submitButton = document.getElementById('submitButton');
+        // } else {
+        //     const submitButton = document.getElementById('submitButton');
+        //                 if (submitButton) {
+        //                     submitButton.click();
+        //                 }
+            
+        // }
+    } else {
+            $.ajax({
+            type: 'POST',
+            url: '/admin/products', // Reemplaza esto con la URL de tu controlador y método
+            data: {
+                _token: '{{ csrf_token() }}', // Agrega el token CSRF de Laravel si es necesario
+                codigoId: codigoId,
+                nombre: nombre,
+                precio_venta: precio_venta,
+                stock: stock,
+                precio_compra: precio_compra,
+                brand_id:brand_id,
+                measure_id:measure_id,
+                category_id:category_id,
+                stock_minimo:stock_minimo,
+                descripcion:descripcion,
+                store_id:store_id,
+            },
+            success: function(response) {
+                
+                    const submitButton = document.getElementById('submitButton');
                         if (submitButton) {
                             submitButton.click();
                         }
+                
+            },
+            error: function(xhr) {
+                if (xhr.status === 422) {
+            const response = xhr.responseJSON;
+            if (response && response.errors) {
+                let errorMessage = '';
+
+                if (Array.isArray(response.errors)) {
+                    errorMessage = response.errors.join('\n');
+                } else if (typeof response.errors === 'object') {
+                    errorMessage = Object.values(response.errors).join('\n');
+                } else {
+                    errorMessage = response.errors.toString();
+                }
+
+                // Manejar los errores de validación
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de validación',
+                    text: errorMessage,
+                });
+            } else {
+                console.error('Respuesta inválida:', response);
+            }
+        } else {
+            console.error('Error en la petición AJAX:', xhr);
+        }
+    }
+        });
             
         }
     }
-    function validarFormEdit() {
+    function validarFormEdit(id) {
         // Obtener los valores de los campos
         const codigoId = document.getElementById('codigoId').value.trim();
         const nombre = document.getElementById('nombre').value.trim();
@@ -335,23 +414,75 @@
         const precio_compra = document.getElementById('precio_compra').value.trim();
         const precio_venta = document.getElementById('precio_venta').value.trim();
         const measure_id = document.getElementById('measure_id').value.trim();
+        const brand_id = document.getElementById('brand_id').value.trim();
         const category_id = document.getElementById('category_id').value.trim();
+        const store_id = document.getElementById('store_id').value.trim();
         const stock_minimo = document.getElementById('stock_minimo').value.trim();
         const descripcion = document.getElementById('descripcion').value.trim();
 
         // Verificar si algún campo está vacío o tiene valor 0
         if (nombre === '' || codigoId === ''  || stock === '' || precio_compra === null|| precio_compra<0
-        || precio_venta === null || precio_venta<0 || measure_id === '' || category_id === '' || stock_minimo === '' || descripcion === '' ) {
+        || precio_venta === null || precio_venta<0 || measure_id === '' || brand_id ==='' || category_id === '' 
+        || stock_minimo === '' || descripcion === '' || store_id === '') {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Por favor, completa todos los campos antes de continuar.',
             });
         } else {
-            const submitButton = document.getElementById('submitButton');
+            $.ajax({
+            type: 'GET',
+            url: '/admin/products/'+id+'/edit', // Reemplaza esto con la URL de tu controlador y método
+            data: {
+                _token: '{{ csrf_token() }}', // Agrega el token CSRF de Laravel si es necesario
+                codigoId: codigoId,
+                nombre: nombre,
+                precio_venta: precio_venta,
+                stock: stock,
+                precio_compra: precio_compra,
+                brand_id:brand_id,
+                measure_id:measure_id,
+                category_id:category_id,
+                stock_minimo:stock_minimo,
+                descripcion:descripcion,
+                store_id:store_id,
+            },
+            success: function(response) {
+                
+                    const submitButton = document.getElementById('submitButton');
                         if (submitButton) {
                             submitButton.click();
                         }
+                
+            },
+            error: function(xhr) {
+                if (xhr.status === 422) {
+            const response = xhr.responseJSON;
+            if (response && response.errors) {
+                let errorMessage = '';
+
+                if (Array.isArray(response.errors)) {
+                    errorMessage = response.errors.join('\n');
+                } else if (typeof response.errors === 'object') {
+                    errorMessage = Object.values(response.errors).join('\n');
+                } else {
+                    errorMessage = response.errors.toString();
+                }
+
+                // Manejar los errores de validación
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de validación',
+                    text: errorMessage,
+                });
+            } else {
+                console.error('Respuesta inválida:', response);
+            }
+        } else {
+            console.error('Error en la petición AJAX:', xhr);
+        }
+    }
+        });
             
         }
     }

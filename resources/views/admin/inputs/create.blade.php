@@ -489,7 +489,7 @@ if (inputDetails.length > 0) {
                     
                     $('#cantidad').val('');
                     $('#precio').val('');
-                    
+                    $('#subtotal').val('');
                     recalculaTotales();
                     actualizarDetallesEnCampoOculto();
                 } else {

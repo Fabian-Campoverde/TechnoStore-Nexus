@@ -168,7 +168,7 @@
                     </td>
                     <td class="px-6 py-4 text-center">
                         <div class="flex items-center justify-center">
-                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2 "></div> Online
+                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2 "></div> <span class="text-green-600 font-semibold">Activo</span>
                         </div>
                     </td>
                     <td class="py-4 px-6 text-center">

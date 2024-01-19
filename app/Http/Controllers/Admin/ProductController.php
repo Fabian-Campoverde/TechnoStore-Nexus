@@ -9,6 +9,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Measure;
 use App\Models\Product;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -42,8 +43,9 @@ class ProductController extends Controller
         $categories = Category::where('estado', 'A')->get();
         $measures = Measure::where('estado', 'A')->get();
         $brands = Brand::where('estado', 'A')->get();
+        $stores= Store::where('estado', 'A')->get();
         $product = new Product();
-        return view("admin.products.create", compact("categories","measures","product","brands"));
+        return view("admin.products.create", compact("categories","measures","product","brands","stores"));
     }
 
     /**
@@ -57,8 +59,9 @@ class ProductController extends Controller
         if($request->has("image_url")){
         $image_path=$request->file("image_url")->store("medias");
         $data["image_url"]=$image_path;
-        }
         Product::create($data);
+        }
+        
         return redirect()->route("admin.products.index")->with(
             [
                 "message"=> "Producto creado con exito",
@@ -84,7 +87,8 @@ class ProductController extends Controller
         $categories = Category::where('estado', 'A')->get();
         $measures = Measure::where('estado', 'A')->get();
         $brands = Brand::where('estado', 'A')->get();
-        return view("admin.products.create", compact("categories","measures","product","brands"));
+        $stores= Store::where('estado', 'A')->get();
+        return view("admin.products.create", compact("categories","measures","product","brands","stores"));
     }
 
     /**

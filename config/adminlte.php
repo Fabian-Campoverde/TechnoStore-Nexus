@@ -346,15 +346,7 @@ return [
             'icon' => 'far fa-fw fa-file-alt',
             'can'=>'admin.categories.index',
             'active'=>['admin/categories*'],
-            // 'submenu' => [
-            //     [
-            //         'text' => 'Administrar Categorias',
-            //         'route'  => 'admin.categories.index',
-            //     ],
-            //     [
-            //         'text' => 'Crear Categorias',
-            //         'route'  => 'admin.categories.create',
-            //     ],]
+            
 
         ],
         [
@@ -423,6 +415,21 @@ return [
                     'text' => 'Detalles de Entradas',
                     'route'  => 'admin.inputs.create',
                 ],]
+        ],       
+         ['header' => 'VENTAS'],
+         [
+            'text' => 'Clientes',
+            'route'  => 'admin.buyers.index',
+            'icon' => 'fas fa-fw fa-id-badge',
+            'can'=>'admin.measures.index',
+            
+        ],
+        [
+            'text' => 'Comprobantes',
+            'route'  => 'admin.invoices.index',
+            'icon' => 'fas fa-fw fa-file-invoice-dollar',
+            'can'=>'admin.measures.index',
+            
         ],
         [
             'text' => 'change_password',

@@ -2,6 +2,7 @@
 
 
 @section('header')
+
 <div class="bg-rose-500 p-4 text-center rounded-lg shadow-lg">
     <h1 class="text-2xl font-semibold text-white uppercase">Dashboard</h1>
   </div>
@@ -14,33 +15,46 @@
     
     <div class="col-md-4">
         
-        <x-adminlte-small-box title="{{$users}}" text="Usuarios" icon="fas fa-user-plus text-teal"
+        <x-adminlte-small-box title="{{$users}}" text="Usuarios registrados" icon="fas fa-user-plus text-teal"
         theme="primary" url="{{ route('admin.users.index') }}" url-text="Ir allá"/>
     </div>
     <div class="col-md-4">
-        <x-adminlte-small-box title="{{$providers}}" text="Proveedores" icon="fas fa-truck text-green"
+        <x-adminlte-small-box title="{{$providers}}" text="Proveedores registrados" icon="fas fa-truck text-green"
         theme="primary" url="{{ route('admin.providers.index') }}" url-text="Ir allá"/>
     </div>
     <div class="col-md-4">
-        <x-adminlte-small-box title="{{$products}}" text="Productos" icon="fas fa-box-open text-black"
+        <x-adminlte-small-box title="{{$products}}" text="Productos registrados" icon="fas fa-box-open text-black"
         theme="primary" url="{{ route('admin.products.index') }}" url-text="Ir allá"/>
     </div>
 </div>
 <div class="row">
     <div class="col-md-4">
-        <x-adminlte-small-box title="{{$categories}}" text="Categorias" icon="fas fa-folder-open text-purple"
+        <x-adminlte-small-box title="{{$categories}}" text="Categorias registrados" icon="fas fa-folder-open text-purple"
         theme="primary" url="{{ route('admin.categories.index') }}" url-text="Ir allá"/>
     </div>
     <div class="col-md-4">
-        <x-adminlte-small-box title="{{$measures}}" text="Medidas" icon="fas fa-ruler text-yellow"
+        <x-adminlte-small-box title="{{$measures}}" text="Medidas registrados" icon="fas fa-ruler text-yellow"
         theme="primary" url="{{ route('admin.measures.index') }}" url-text="Ir allá"/>
     </div>
     <div class="col-md-4">
-        <x-adminlte-small-box title="{{$inputs}}" text="Compras" icon="fas fa-shopping-cart text-red"
+        <x-adminlte-small-box title="{{$stores}}" text="Almacenes registrados" icon="fas fa-warehouse text-red"
+        theme="primary" url="{{ route('admin.stores.index') }}" url-text="Ir allá"/>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <x-adminlte-small-box title="{{$buyers}}" text="Clientes registrados" icon="fas fa-id-badge text-lime"
+        theme="primary" url="{{ route('admin.buyers.index') }}" url-text="Ir allá"/>
+    </div>
+    <div class="col-md-4">
+        <x-adminlte-small-box title="{{$invoices}}" text="Comprobantes registrados" icon="fas fa-file-invoice-dollar text-black"
+        theme="primary" url="{{ route('admin.invoices.index') }}" url-text="Ir allá"/>
+    </div>
+    <div class="col-md-4">
+        <x-adminlte-small-box title="{{$inputs}}" text="Compras registrados" icon="fas fa-shopping-cart text-indigo"
         theme="primary" url="{{ route('admin.inputs.index') }}" url-text="Ir allá"/>
     </div>
 </div>
-    
 {{-- <div class="flex space-x-4 " >
     <a href="{{ route('admin.categories.index') }}" class=" hover:underline">
         <div class="bg-white flex items-center border border-gray-200 rounded-t-lg shadow-md max-w-md">

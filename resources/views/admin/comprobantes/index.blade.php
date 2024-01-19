@@ -2,13 +2,12 @@
 
 
 @section('header-new')
-<div class="bg-emerald-500 p-4 text-center rounded-lg shadow-lg">
-    <h1 class="text-2xl font-semibold text-white uppercase">Proveedores</h1>
+<div class="bg-gray-500 bg-opacity-60 p-4 text-center rounded-lg shadow-lg">
+    <h1 class="text-2xl font-semibold text-white uppercase">Comprobantes</h1>
   </div>
     
 @endsection
 @section('css-new')
-
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 @endsection
 @section('container-new')
@@ -22,7 +21,7 @@ class="inline-flex items-center px-4 py-2
     text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 
     active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 
     focus:ring-offset-2 transition ease-in-out duration-150 ml-4"
->{{ __('Agregar nuevo proveedor') }}</button>
+>{{ __('Agregar nuevo comprobante' ) }}</button>
         
 </div>
 <div class="modal fade " id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
@@ -30,48 +29,38 @@ style="margin-left: 40px; ">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Nuevo Proveedor</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Nuevo Comprobante</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <form class="p-4 md:p-5" method="POST" id="formAdd" action="{{ route('admin.providers.store') }}">
+            <form class="p-4 md:p-5" method="POST" id="formAdd" action="{{ route('admin.invoices.store') }}">
                 @csrf
-                <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                <div class="grid gap-4 mb-4 sm:grid-cols-2">                                    
                     <div class="sm:col-span-2">
-                        <label for="razon" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            <i class="fas fa-user-tie mr-1 my-text-color"></i> Razon Social:</label>
-                          <input type="text" name="razon_social" id="razon_social"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Pepsico Iberia Servicios Centrales, S.L." >                    
+                        <label for="phone-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <i class="fas fa-file"></i> Nombre de comprobante</label>
+    <div class="relative">
+        
+        <input type="text" name="tipo"  id="tipo" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  placeholder="123456789" >
+    </div>
                     </div>
-                    <div class="sm:col-span-2">
+                    
+                    <div >
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            <i class="fas fa-address-card"></i> Nombre Comercial:</label>
-                        <input type="text" name="nombre"  id="nombre" 
+                            <i class="fas fa-file"></i> Serie:</label>
+                        <input type="text" name="serie"  id="serie" 
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Pepsi" >
                     </div>
                     <div>
                         <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            <i class="fas fa-id-card mr-1 my-text-color"></i> RUC:</label>
-                          <input type="text" name="ruc"  id="ruc" 
+                            <i class="fas fa-file"></i> Correlativo: </label>
+                          <input type="text" name="correlativo"  id="correlativo" 
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="10734677071 " >
                     </div>
                    
-                    <div>
-                        <label for="phone-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            <i class="fas fa-phone-alt"></i> Telefono:</label>
-    <div class="relative">
-        
-        <input type="text" name="telefono"  id="telefono" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  placeholder="123456789" >
-    </div>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            <i class="fas fa-map-marker-alt mr-1 my-text-color"></i> Direccion:</label>
-                        <input type="text" name="direccion"   id="direccion"  
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Av. Balta 123" >                   
-                    </div>
+                   
                 </div>
                 <button id="submitButton" type="submit" style="display: none;"></button>
             </form>
@@ -95,7 +84,7 @@ style="margin-left: 40px; ">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Editar Proveedor</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Editar Comprobante</h5>
           <button type="button" id="close-edit" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -105,33 +94,30 @@ style="margin-left: 40px; ">
                 {{ method_field('PUT') }}
                 @csrf
                 <input type="hidden" name="id" id="id">
-                <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                <div class="grid gap-4 mb-4 sm:grid-cols-2">                                    
                     <div class="sm:col-span-2">
-                        <label for="razon" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Razon Social</label>
-                          <input type="text" name="razon_social" id="razon_socialEdit"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Pepsico Iberia Servicios Centrales, S.L." >                    
+                        <label for="phone-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <i class="fas fa-file"></i> Nombre de comprobante</label>
+    <div class="relative">
+        
+        <input type="text" name="tipo"  id="tipoEdit" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  placeholder="123456789" >
+    </div>
                     </div>
-                    <div class="sm:col-span-2">
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre Comercial</label>
-                        <input type="text" name="nombre"  id="nombreEdit" 
+                    
+                    <div >
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <i class="fas fa-file"></i> Serie:</label>
+                        <input type="text" name="serie"  id="serieEdit" 
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Pepsi" >
                     </div>
                     <div>
-                        <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">RUC</label>
-                          <input type="text" name="ruc"  id="rucEdit" 
+                        <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <i class="fas fa-file"></i> Correlativo: </label>
+                          <input type="text" name="correlativo"  id="correlativoEdit" 
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="10734677071 " >
                     </div>
-                    <div>
-                        <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telefono</label>
-                          <input type="text" name="telefono"  id="telefonoEdit" 
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="950915951" >
-                    </div>
-                    
-                    <div class="sm:col-span-2">
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Direccion</label>
-                        <input type="text" name="direccion"   id="direccionEdit"  
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Av. Balta 123" >                   
-                    </div>
+                   
+                   
                 </div>
                 <button id="submitButtonEdit" type="submit" style="display: none;"></button>
             </form>
@@ -160,6 +146,7 @@ style="margin-left: 40px; ">
     <div class="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2">
        <!--Card-->
         <div  class="p-8 mt-6  lg:mt-0 rounded shadow bg-white">
+           
                         <table id="example" class="stripe hover " style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                     <thead class="text-xs text-gray-700 uppercase bg-emerald-100 ">
                         <tr>
@@ -168,67 +155,51 @@ style="margin-left: 40px; ">
                                 Id
                             </th>
                             <th scope="col" class="px-6 py-3 text-center">
-                                RUC
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Razon Social
+                                Tipo de Comprobante
                             </th>
                             <th scope="col" class="px-6 py-3 text-center">
-                                Nombre comercial
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Telefono
+                                Serie
                             </th>
                             <th scope="col" class="px-6 py-3 text-center">
-                                Direccion
+                                Correlativo 
                             </th>
-                            <th scope="col" class="px-6 py-3 text-center">
-                               Creacion
-                            </th>
+                           
+                            
                             <th scope="col" class="py-3 px-6 text-center">
                                 Acciones
                             </th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 text-sm font-light">
-                        @foreach ($providers as $p)
+                        @foreach ($invoices as $i)
                             
                         
                         <tr class=" border-b border-gray-200  hover:bg-gray-50 ">
                             
                         
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center">
-                                {{$p->id}}
+                                {{$i->id}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center">
-                                {{$p->ruc}}
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 uppercase whitespace-nowrap text-center">
+                                {{$i->tipo}}
                             </th>
                             <td class="px-6 py-4 text-center">
-                                {{$p->razon_social}}
+                                {{$i->serie}}
                             </td>
                             <td class="px-6 py-4 text-center">
-                                {{$p->nombre}}
+                                {{$i->correlativo}}
                             </td>
-                            <td class="px-6 py-4 text-center">
-                                {{$p->telefono}}
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                {{$p->direccion}}
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                {{$p->created_at}}
-                            </td>
+                            
                             <td class="px-6 py-4">
                                 <div class="flex item-center justify-center">
                                 
                                 <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                    <button class="inline-flex items-center editar-prov" id="readProductButton"
-                                                            data-prov-id="{{ $p->id }}"
-                                                            data-prov-nombre="{{ $p->nombre }}" 
-                                                            data-prov-razon="{{ $p->razon_social }}"  
-                                                            data-prov-ruc="{{ $p->ruc }}" 
-                                                            data-prov-direccion="{{ $p->direccion }}" 
-                                                            data-prov-telefono="{{ $p->telefono }}"         
+                                    <button class="inline-flex items-center editar-invoice" id="readProductButton"
+                                                            data-invoice-id="{{ $i->id }}"
+                                                            data-invoice-tipo="{{ $i->tipo }}" 
+                                                            data-invoice-serie="{{ $i->serie }}"  
+                                                            data-invoice-correlativo="{{ $i->correlativo }}" 
+                                                                     
                                                             data-toggle="modal" data-target="#editModal">
                                                                 <svg class="w-5 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                     viewBox="0 0 24 24" stroke="currentColor">
@@ -241,10 +212,10 @@ style="margin-left: 40px; ">
                                 
                                 <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                     
-                                    <form class="form-delete" action="{{route('admin.providers.destroy',['provider'=>$p->id])}}" method="post" x-data>
+                                    <form class="form-delete" action="{{route('admin.invoices.destroy',['invoice'=>$i->id])}}" method="post" x-data>
                                         @csrf
                                         {{method_field("DELETE")}}
-                                        <input type="hidden" name="provide_name" value="{{ $p->nombre }}">
+                                        <input type="hidden" name="invoice_name" value="{{ $i->tipo }}">
                                         <button type="submit" class="inline-flex items-center" >
                                             <svg class="w-5 h-4"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -279,27 +250,10 @@ style="margin-left: 40px; ">
 @endsection
 
 @section('js-new')
-<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-@if (session('status'))
-            <script>
-                
-                Toastify({
-            text: '{{ session('message') }}', // Mensaje del toast desde la sesión
-            duration: 1500, // Duración del toast en milisegundos (en este caso, 1.5 segundos)
-            close: false, // Mostrar botón de cierre
-            gravity: 'top', // Posición del toast 
-            position: 'right', // Alineación del toast 
-            offset: {
-    x: 10, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-    y: 50 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-  },
-            backgroundColor: '#{{ session('color') }}', // Color de fondo del toast
-        }).showToast();
-            </script>
-        @endif
 <script>
     $(document).ready(function() {
-    var table = $('#example').DataTable({
+            
+                var table = $('#example').DataTable({
         responsive:true,
         stateSave:true,
         language: {
@@ -344,31 +298,28 @@ style="margin-left: 40px; ">
             'colvis'
         ],
     });
-
     
-        $('#example tbody').on('click', '.editar-prov', function() {
+    $('#example tbody').on('click', '.editar-invoice', function() {
             
-const provId = $(this).data('prov-id');
-            const provNombre = $(this).data('prov-nombre');
-            const provRazon = $(this).data('prov-razon');
-            const provRuc = $(this).data('prov-ruc');
-            const provDireccion = $(this).data('prov-direccion');
-            const provTelefono = $(this).data('prov-telefono');
+            const invoiceId = $(this).data('invoice-id');
+            const invoiceTipo = $(this).data('invoice-tipo');
+            const invoiceSerie = $(this).data('invoice-serie');
+            const invoiceCorrelativo = $(this).data('invoice-correlativo');
+            
 
             
             // Rellenar el formulario en el modal con los datos obtenidos
-            $('#id').val(provId);
-            $('#nombreEdit').val(provNombre);
-            $('#razon_socialEdit').val(provRazon);
-            $('#rucEdit').val(provRuc);
-            $('#direccionEdit').val(provDireccion);
-            $('#telefonoEdit').val(provTelefono);
+            $('#id').val(invoiceId);
+            $('#tipoEdit').val(invoiceTipo);
+            $('#serieEdit').val(invoiceSerie);
+            $('#correlativoEdit').val(invoiceCorrelativo);
+            
             
 
             // Establecer la acción del formulario para editar la categoría
             const editForm = $('#editForm');
-            const actionUrl = "{{ route('admin.providers.update', ['provider' => ':provider']) }}";
-            const updatedActionUrl = actionUrl.replace(':provider', provId);
+            const actionUrl = "{{ route('admin.invoices.update', ['invoice' => ':invoice']) }}";
+            const updatedActionUrl = actionUrl.replace(':invoice', invoiceId);
             editForm.attr('action', updatedActionUrl);
             
             
@@ -378,9 +329,9 @@ const provId = $(this).data('prov-id');
 
     $('.form-delete').submit(function (e) {
         e.preventDefault();
-        const providerName = e.target.querySelector("input[name='provide_name']").value;
+        const invoiceName = e.target.querySelector("input[name='invoice_name']").value;
         Swal.fire({
-  title: `¿Estás seguro de que deseas eliminar el proveedor "${providerName}"?`,
+  title: `¿Estás seguro de que deseas eliminar el comprobante "${invoiceName}"?`,
   text: "No hay vuelta atrás!",
   icon: 'warning',
   showCancelButton: true,
@@ -390,52 +341,47 @@ const provId = $(this).data('prov-id');
   cancelButtonText:'Cancelar'
 }).then((result) => {
   if (result.isConfirmed) {
-    // Swal.fire(
-    //   'Deleted!',
-    //   'Your file has been deleted.',
-    //   'success'
-    // )
+    
     this.submit();
   }
 });
     });
-});
+    });
 </script>
-<script>
-      
-    // document.getElementById('closeAlert').addEventListener('click', function() {
-    //     document.getElementById('alert').style.display = 'none';
-    // });
-    const closeButton = document.querySelector('[data-dismiss-target="#alert-1"]');
-    if (closeButton) {
-        closeButton.addEventListener('click', function() {
-            const alert = document.getElementById('alert-1');
-            if (alert) {
-                alert.style.display = 'none';
-            }
-        });
-    };
-    
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+@if (session('status'))
+            <script>
+                
+                Toastify({
+            text: '{{ session('message') }}', // Mensaje del toast desde la sesión
+            duration: 1500, // Duración del toast en milisegundos (en este caso, 1.5 segundos)
+            close: false, // Mostrar botón de cierre
+            gravity: 'top', // Posición del toast 
+            position: 'right', // Alineación del toast 
+            offset: {
+    x: 10, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+    y: 50 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+  },
+            backgroundColor: '#{{ session('color') }}', // Color de fondo del toast
+        }).showToast();
+            </script>
+        @endif
 
 
-    
-   
-</script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/libretranslate@2.1.0/dist/libretranslate.js"></script>
 <script>
      function validarForm() {
         // Obtener los valores de los campos
-        const razon_social = document.getElementById('razon_social').value.trim();
-        const nombre = document.getElementById('nombre').value.trim();
-        const ruc = document.getElementById('ruc').value.trim();
-        const telefono = document.getElementById('telefono').value.trim();
-        const direccion = document.getElementById('direccion').value.trim();
+        const tipo = document.getElementById('tipo').value.trim();
+        const serie = document.getElementById('serie').value.trim();
+        const correlativo = document.getElementById('correlativo').value.trim();
         
 
         // Verificar si algún campo está vacío o tiene valor 0
-        if (nombre === '' || razon_social === '' || direccion === '' || telefono === '' || ruc === '' ) {
+        if (tipo === '' || serie === '' ) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -444,14 +390,14 @@ const provId = $(this).data('prov-id');
         } else {
             $.ajax({
             type: 'POST',
-            url: '/admin/providers', // Reemplaza esto con la URL de tu controlador y método
+            url: '/admin/invoices', // Reemplaza esto con la URL de tu controlador y método
             data: {
                 _token: '{{ csrf_token() }}', // Agrega el token CSRF de Laravel si es necesario
-                razon_social: razon_social,
-                nombre: nombre,
-                ruc: ruc,
-                telefono: telefono,
-                direccion: direccion
+                tipo: tipo,
+                serie: serie,
+                correlativo: correlativo ,
+                
+                
             },
             success: function(response) {
                 
@@ -459,6 +405,7 @@ const provId = $(this).data('prov-id');
                         if (submitButton) {
                             submitButton.click();
                         }
+                        
                 
             },
             error: function(xhr) {
@@ -491,22 +438,20 @@ const provId = $(this).data('prov-id');
         });
             
         }
-    }
+     }
 </script>
 
 <script>
     function validarFormEdit() {
         // Obtener los valores de los campos
         const id = document.getElementById('id').value.trim();
-        const razon_social = document.getElementById('razon_socialEdit').value.trim();
-        const nombre = document.getElementById('nombreEdit').value.trim();
-        const ruc = document.getElementById('rucEdit').value.trim();
-        const telefono = document.getElementById('telefonoEdit').value.trim();
-        const direccion = document.getElementById('direccionEdit').value.trim();
+        const tipo = document.getElementById('tipoEdit').value.trim();
+        const serie = document.getElementById('serieEdit').value.trim();
+        const correlativo = document.getElementById('correlativoEdit').value.trim();
         
 
         // Verificar si algún campo está vacío o tiene valor 0
-        if (id === '' || nombre === '' || razon_social === '' || direccion === '' || telefono === '' || ruc === '' ) {
+        if (tipo === '' || serie === '' ) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -515,15 +460,13 @@ const provId = $(this).data('prov-id');
         } else {
             $.ajax({
             type: 'POST',
-            url: '/admin/providers/'+id, 
+            url: '/admin/invoices/'+id, 
             data: {
                 _token: '{{ csrf_token() }}',
                 _method: 'PUT', 
-                razon_social: razon_social,
-                nombre: nombre,
-                ruc: ruc,
-                telefono: telefono,
-                direccion: direccion
+                tipo: tipo,
+                serie: serie,
+                correlativo: correlativo ,
             },
             success: function(response) {
                 

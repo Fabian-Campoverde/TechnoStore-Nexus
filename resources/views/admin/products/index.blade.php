@@ -8,7 +8,7 @@
   
 @endsection
 @section('css-new')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 @endsection
 @section('container-new')
@@ -38,9 +38,9 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button  type="button" class="btn btn-danger" data-dismiss="modal">
-                        <span class="d-none d-sm-block">Cancelar</span>
-                              </button>
+                    <button type="button" data-dismiss="modal" class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">                    
+                        Cancelar
+                    </button>
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
   
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" style="padding: 1px">
         
-        @if (session('status'))
+        {{-- @if (session('status'))
         <br>
         <div id="alert-1" class="flex items-center p-4 mb-4 text-{{session('color')}}-800 rounded-lg bg-{{session('color')}}-50"  role="alert">
             <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -69,86 +69,9 @@
             </button>
         </div>
     </div>
-    @endif 
+    @endif  --}}
 
-
-    
-    {{-- <div class="bg-white overflow-hidden sm:rounded-lg " >
-        <div class="overflow-x-auto ">
-            
-                
-                  <!-- Start coding here -->
-                  <div class=" bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
-                    <div class="flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0 md:space-x-4">
-                      <div class="w-full md:w-1/2">
-                        <form class="flex items-center">
-                            <label for="simple-search" class="sr-only">Search</label>
-                            <div class="relative w-full">
-                              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                                </svg>
-                              </div>
-                              <input wire:model="searchTerm" wire:keydown.debounce.500ms="search" type="search"  class="block w-full p-200 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search">
-                            </div>
-                          </form>
-                      </div>
-                      <div class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-3">
-                        <a type="button" href="{{route('admin.products.create')}}" class="flex items-center justify-center px-4 py-2 text-sm font-medium text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                              
-                            <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                              <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-                            </svg>
-                            Agregar Producto
-                          </a>
-                        <div class="flex items-center w-full space-x-3 md:w-auto">
-                          <button type="button" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                            <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                            </svg>
-                            Export
-                        </button>
-                          
-                          <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown" class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button">
-                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-4 h-4 mr-2 text-gray-400" viewbox="0 0 20 20" fill="currentColor">
-                              <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
-                            </svg>
-                            Filter
-                            <svg class="-mr-1 ml-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                              <path clip-rule="evenodd" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                            </svg>
-                          </button>
-                          
-                          <!-- Dropdown menu -->
-                          
-                          <div id="filterDropdown" class="z-10 hidden w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
-                            <h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">
-                                Categorias
-                            </h6>
-                            <form wire:submit.prevent="filterCategories">
-                              <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
-                                  @foreach ($categoriesWithCount as $item)
-                                      <li class="flex items-center">
-                                          <input wire:model.defer="selectedCategories" wire:change="filterCategories" id="{{$item->nombre}}" type="checkbox" value="{{$item->id}}"
-                                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                          <label for="{{$item->nombre}}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                                              {{$item->nombre}} ({{$item->productCount}})
-                                          </label>
-                                      </li>
-                                  @endforeach
-                              </ul>
-                          </form>
-                          </div>
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-        </div>
-    </div> --}}
         
-                
-            
     <div class="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2">
 
 		
@@ -197,7 +120,7 @@
                 </th>
             </tr>
         </thead>
-        <tbody class="text-blue-900 text-sm font-dark">
+        <tbody class="text-gray-600 text-sm font-light">
             @foreach ($products as $product)
               @php
                     if ($product->stock>$product->stock_minimo ) {
@@ -346,6 +269,24 @@
 @endsection
 
 @section('js-new')
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+@if (session('status'))
+            <script>
+                
+                Toastify({
+            text: '{{ session('message') }}', // Mensaje del toast desde la sesión
+            duration: 1500, // Duración del toast en milisegundos (en este caso, 1.5 segundos)
+            close: false, // Mostrar botón de cierre
+            gravity: 'top', // Posición del toast 
+            position: 'right', // Alineación del toast 
+            offset: {
+    x: 10, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+    y: 50 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+  },
+            backgroundColor: '#{{ session('color') }}', // Color de fondo del toast
+        }).showToast();
+            </script>
+        @endif
 <script>
     $(document).ready(function() {
         var table = $('#table').DataTable({
@@ -381,8 +322,8 @@
     lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "Mostrar Todo"] ],
     buttons: [
         {
-            text: '{{ __('Agregar producto') }}',
-            className: 'inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md addProduct',
+            text: '{{ __('Nuevo producto') }}',
+            className: 'inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-lg addProduct',
             action: function () {
                 window.location.href = '{{ route('admin.products.create') }}';
             }
