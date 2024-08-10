@@ -107,10 +107,10 @@
                   Stock de Alerta
               </th>--}}
               <th scope="col" class="px-6 py-3 text-center">
-                Precio de Compra
+                Pcompra / Pventa
             </th>
             <th scope="col" class="px-6 py-3 text-center">
-                Precio de Venta
+                Proveedor
             </th> 
               <th scope="col" class="px-6 py-3 text-center">
                 Estado
@@ -130,7 +130,7 @@
                         $color= "background: rgb(242, 215, 213); color: rgb(0, 0, 0);";
                     }
                 @endphp
-            <tr class=" border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" style="{{$color}}">
+            <tr class=" border-b border-gray-200  hover:bg-gray-50" style="{{$color}}">
     
                
                 <th scope="row" class="px-6 text-center py-4  font-medium  whitespace-nowrap dark:text-white">
@@ -173,10 +173,12 @@
                     {{$product->stock_minimo}}
                 </td>--}}
                 <td class="px-6 py-4 text-center">
-                    S/. {{$product->precio_compra}}
+                    S/. {{$product->precio_compra}} / S/. {{$product->precio_venta}}
                 </td>
                 <td class="px-6 py-4 text-center">
-                    S/. {{$product->precio_venta}}
+                    @if ($product->provider) 
+                {{ $product->provider->nombre }}
+                    @endif
                 </td> 
                 
                 <td class="px-6 py-4 text-center">
@@ -298,27 +300,8 @@
         thousands: '.'
     },
     
-    dom: 'PBfrtip',
-    searchPanes: {
-            layout: 'columns-3',
-            initCollapsed: true,
-            
-        },
-        
-        columnDefs: [
-            {
-                searchPanes: {
-                    show: true
-                },
-                targets: [3,4,7]
-            },
-            {
-                searchPanes: {
-                    show: false
-                },
-                targets: [8]
-            }
-        ],
+    dom: 'Bfrtip',
+    
     lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "Mostrar Todo"] ],
     buttons: [
         {

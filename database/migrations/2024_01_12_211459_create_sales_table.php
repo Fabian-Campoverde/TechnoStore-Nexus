@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->string('comprobante');
+            $table->foreignId('invoice_id')->constrained('invoices');
+            $table->string('correlativo')->unique();
             $table->date('fechaEmision')->nullable();           
             $table->double('totalVenta',12,2);
             $table->double('totalPagado',12,2);

@@ -9,6 +9,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Measure;
 use App\Models\Product;
+use App\Models\Provider;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -43,9 +44,9 @@ class ProductController extends Controller
         $categories = Category::where('estado', 'A')->get();
         $measures = Measure::where('estado', 'A')->get();
         $brands = Brand::where('estado', 'A')->get();
-        $stores= Store::where('estado', 'A')->get();
+        $providers= Provider::where('estado', 'A')->get();
         $product = new Product();
-        return view("admin.products.create", compact("categories","measures","product","brands","stores"));
+        return view("admin.products.create", compact("categories","measures","product","brands","providers"));
     }
 
     /**
@@ -87,8 +88,8 @@ class ProductController extends Controller
         $categories = Category::where('estado', 'A')->get();
         $measures = Measure::where('estado', 'A')->get();
         $brands = Brand::where('estado', 'A')->get();
-        $stores= Store::where('estado', 'A')->get();
-        return view("admin.products.create", compact("categories","measures","product","brands","stores"));
+        $providers= Provider::where('estado', 'A')->get();
+        return view("admin.products.create", compact("categories","measures","product","brands","providers"));
     }
 
     /**

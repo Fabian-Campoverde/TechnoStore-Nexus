@@ -32,7 +32,7 @@ class ProductRequest extends FormRequest
             "measure_id"=> "required|numeric",
             "stock_minimo"=> "numeric|min:0",
             "descripcion"=> "required|max:300",
-            "store_id"=> "required|numeric",
+            "provider_id"=> "required|numeric",
             // 'image_url' => 'image|required',
         ];
     }

@@ -110,37 +110,46 @@ class ProviderController extends Controller
         
         return redirect()->route("admin.providers.index")->with($result);
     }
-    public function obtenerProveedores(Request $request)
+
+    public function status(Request $request,Provider $provider)
 {
-    $proveedoresQuery = Provider::query()
-        ->select('id', 'nombre', 'ruc')
-        ->orderBy('nombre');
-
-    if ($request->has('search')) {
-        $searchTerm = $request->input('search');
-        $proveedoresQuery->where('nombre', 'like', "%$searchTerm%")
-                        ->orWhere('ruc', 'like', "%$searchTerm%");
-    }
-
-    if ($request->exists('selected')) {
-        $selected = $request->input('selected', []);
-        $proveedoresQuery->whereIn('id', $selected);
-    } else {
-        $proveedoresQuery->limit(2);
-    }
-
-    $proveedores = $proveedoresQuery->get();
-
-    $proveedoresFormateados = $proveedores->map(function ($proveedor) {
-        return [
-            'value' => $proveedor->id,
-            'label' => $proveedor->nombre,
-            'description' => $proveedor->ruc,
-            
-        ];
-    });
-
-    return response()->json($proveedoresFormateados);
+    $provider->estado = $request->estado;
+    $provider->save();
+    return response()->json(['message' => 'Proveedor modificada exitosamente']);
 }
+//     public function obtenerProveedores(Request $request)
+// {
+//     $proveedoresQuery = Provider::query()
+//         ->select('id', 'nombre', 'ruc')
+//         ->orderBy('nombre');
+
+//     if ($request->has('search')) {
+//         $searchTerm = $request->input('search');
+//         $proveedoresQuery->where('nombre', 'like', "%$searchTerm%")
+//                         ->orWhere('ruc', 'like', "%$searchTerm%");
+//     }
+
+//     if ($request->exists('selected')) {
+//         $selected = $request->input('selected', []);
+//         $proveedoresQuery->whereIn('id', $selected);
+//     } else {
+//         $proveedoresQuery->limit(2);
+//     }
+
+//     $proveedores = $proveedoresQuery->get();
+
+//     $proveedoresFormateados = $proveedores->map(function ($proveedor) {
+//         return [
+//             'value' => $proveedor->id,
+//             'label' => $proveedor->nombre,
+//             'description' => $proveedor->ruc,
+            
+//         ];
+//     });
+
+//     return response()->json($proveedoresFormateados);
+// }
+
+
     
 }

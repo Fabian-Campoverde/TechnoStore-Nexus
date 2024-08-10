@@ -185,6 +185,7 @@ style="margin-left: 40px; ">
                             <th scope="col" class="px-6 py-3 text-center">
                                Creacion
                             </th>
+                            <th class="py-3 px-6 text-center">Estado</th>
                             <th scope="col" class="py-3 px-6 text-center">
                                 Acciones
                             </th>
@@ -218,9 +219,49 @@ style="margin-left: 40px; ">
                             <td class="px-6 py-4 text-center">
                                 {{$p->created_at}}
                             </td>
+                            <td class="py-3 px-6 text-center">
+                                <span
+                    class="relative inline-block px-3 py-1 font-semibold text-gray-900 leading-tight">
+                    <span aria-hidden
+                        class="absolute inset-0 
+                        @if ($p->estado==='A')
+                        bg-green-200
+                    @else
+                    bg-red-200
+                    @endif
+                     opacity-50 rounded-full"></span>
+                <span class="relative">
+                    @if ($p->estado==='A')
+                    Activo  
+                    @else
+                    Inactivo
+                    @endif
+                    
+                </span>
+                </span>
+                            </td>
                             <td class="px-6 py-4">
                                 <div class="flex item-center justify-center">
-                                
+                                    <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                        @if ($p->estado==='A')
+                                        <button class="inline-flex items-center desactivar" 
+                                        data-proveedor-id="{{ $p->id }}"
+                                    id="deactivateProviderButton" title="Desactivar proveedor">
+                                        <svg class="w-3 h-3 text-red-500 dark:text-white" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                          </svg>
+                                    </button>  
+                    @else
+                    <button class="inline-flex items-center activar" 
+                                        data-proveedor-id="{{ $p->id }}"
+                                    id="activateProviderButton" title="Activar proveedor">
+                                        <svg class="w-3 h-3 text-green-500 dark:text-white" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+                                          </svg>
+                                    </button>  
+                    @endif
+                                        
+                                    </div>
                                 <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                     <button class="inline-flex items-center editar-prov" id="readProductButton"
                                                             data-prov-id="{{ $p->id }}"
@@ -399,6 +440,52 @@ const provId = $(this).data('prov-id');
   }
 });
     });
+
+    $('#example tbody').on('click', '.desactivar', function() {
+            const proveedorId = $(this).data('proveedor-id');
+
+    $.ajax({
+        url: 'admin/providers/' + proveedorId + '/status',
+        type: 'PUT',
+        data: {
+                _token: '{{ csrf_token() }}',
+                _method: 'PUT',
+                estado: 'I'
+        },
+        success: function(response) {
+           
+            console.log('Desactivar proveedor:', response);
+            location.reload();
+        },
+        error: function(xhr) {
+            // Manejar errores si es necesario
+            console.error('Error al desactivar proveedor:', xhr);
+        }
+    });
+});
+
+$('#example tbody').on('click', '.activar', function() {
+            const proveedorId = $(this).data('proveedor-id');
+
+    $.ajax({
+        url: 'admin/providers/' + proveedorId + '/status',
+        type: 'PUT',
+        data: {
+                _token: '{{ csrf_token() }}',
+                _method: 'PUT',
+                estado: 'A'
+        },
+        success: function(response) {
+            console.log('Activar proveedor:', response);
+            location.reload();
+          
+        },
+        error: function(xhr) {
+            // Manejar errores si es necesario
+            console.error('Error al activar proveedor:', xhr);
+        }
+    });
+});
 });
 </script>
 <script>

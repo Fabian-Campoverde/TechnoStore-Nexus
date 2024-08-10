@@ -11,5 +11,7 @@ class Buyer extends Model
 
     protected $fillable = ['documento','nro_doc','nombre','correo','direccion','telefono'];
 
-    
+    public function sales(){
+        return $this->hasMany(Sale::class);
+    }
 }

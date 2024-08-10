@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'MARAVI VENTAS')
+@section('title', 'TECHSTORE NEXUS')
 
 @section('content_header')
     @yield('header')

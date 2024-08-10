@@ -16,11 +16,25 @@
  span.select2-selection__rendered,
  span.select2-selection__arrow {
      height: 40px !important;
-     line-height: 27px !important;
-     
-     
-     
+     line-height: 27px !important;      
  }
+ .input-group {
+    display: flex;
+    align-items: center;
+}
+
+.input-group-text {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+
+input[type="text"] {
+    border-radius: 0 0.25rem 0.25rem 0;
+    border-left: none;
+}
+
  </style>
 @endsection
 
@@ -67,12 +81,12 @@
             @csrf
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="w-full">
-                    <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Almacen</label>
-                    <select name="store_id" id="store_id" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        <option value="">Selecciona almacen</option>
-                        @foreach ($stores as $s)
-                        <option value="{{$s->id}}"
-                            @if (old('store_id',$product->store_id) == $s->id) selected @endif>{{$s->nombre}}</option>
+                    <label for="provider" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Proveedor</label>
+                    <select name="provider_id" id="provider_id" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <option value="">Selecciona proveedor</option>
+                        @foreach ($providers as $p)
+                        <option value="{{$p->id}}"
+                            @if (old('provider_id',$product->provider_id) == $p->id) selected @endif>{{$p->nombre}}</option>
                         @endforeach
                       
                     </select>
@@ -188,23 +202,31 @@
                     @enderror
                 </div>
                 <div class="w-full">
-                    <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio Compra</label>
-                    <input type="text" value="{{old('precio_compra',$product->precio_compra)}}"
-                    name="precio_compra" id="precio_compra" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="S/. 2999" >
+                    <label for="precio_compra" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio Compra</label>
+                    <div class="flex items-center">
+                        <span class="px-3 py-2 bg-gray-200 text-gray-900 border border-gray-300 rounded-l-lg">S/.</span>
+                        <input type="text" value="{{old('precio_compra',$product->precio_compra)}}"
+                        name="precio_compra" id="precio_compra" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="0.00">
+                    </div>
                     @error('precio_compra')
-                    <span class=" text-sm text-red-600" role="alert">
+                    <span class="text-sm text-red-600" role="alert">
                         <strong>{{$message}}</strong>
                     @enderror
                 </div>
                 
                 <div class="w-full">
-                    <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio Venta</label>
-                    <input type="text" value="{{old('precio_venta',$product->precio_venta)}}" name="precio_venta" id="precio_venta" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="S/. 2999" >
+                    <label for="precio_venta" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio Venta</label>
+                    <div class="flex items-center">
+                        <span class="px-3 py-2 bg-gray-200 text-gray-900 border border-gray-300 rounded-l-lg">S/.</span>
+                        <input type="text" value="{{old('precio_venta',$product->precio_venta)}}"
+                        name="precio_venta" id="precio_venta" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="0.00">
+                    </div>
                     @error('precio_venta')
-                    <span class=" text-sm text-red-600" role="alert">
+                    <span class="text-sm text-red-600" role="alert">
                         <strong>{{$message}}</strong>
                     @enderror
                 </div>
+                
                 
                 <div class="w-full">
                     <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
@@ -248,7 +270,7 @@
                     <textarea placeholder="Detalles del producto" name="descripcion" id="descripcion" rows="5" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     >{{old('descripcion',$product->descripcion)}}</textarea>
                     @error('descripcion')
-                    <span class=" text-sm text-red-600" role="alert">
+                    <span class="text-sm text-red-600" role="alert">
                         <strong>{{$message}}</strong>
                     @enderror
                 </div>
@@ -296,7 +318,7 @@
                 width: '100%',
                 
             });
-            $('#store_id').select2({
+            $('#provider_id').select2({
                 width: '100%',
                 
             });
@@ -322,14 +344,14 @@
         const measure_id = document.getElementById('measure_id').value.trim();
         const brand_id = document.getElementById('brand_id').value.trim();
         const category_id = document.getElementById('category_id').value.trim();
-        const store_id = document.getElementById('store_id').value.trim();
+        const provider_id = document.getElementById('provider_id').value.trim();
         const stock_minimo = document.getElementById('stock_minimo').value.trim();
         const descripcion = document.getElementById('descripcion').value.trim();
 
         // Verificar si algún campo está vacío o tiene valor 0
         if (nombre === '' || codigoId === '' || image_url === '' || stock === '' || precio_compra === null|| precio_compra<0
         || precio_venta === null || precio_venta<0 || measure_id === '' || brand_id ==='' || category_id === '' 
-        || stock_minimo === '' || descripcion === '' || store_id === '') {
+        || stock_minimo === '' || descripcion === '' || provider_id === '') {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -358,7 +380,7 @@
                 category_id:category_id,
                 stock_minimo:stock_minimo,
                 descripcion:descripcion,
-                store_id:store_id,
+                provider_id:provider_id,
             },
             success: function(response) {
                 
@@ -416,14 +438,14 @@
         const measure_id = document.getElementById('measure_id').value.trim();
         const brand_id = document.getElementById('brand_id').value.trim();
         const category_id = document.getElementById('category_id').value.trim();
-        const store_id = document.getElementById('store_id').value.trim();
+        const provider_id = document.getElementById('provider_id').value.trim();
         const stock_minimo = document.getElementById('stock_minimo').value.trim();
         const descripcion = document.getElementById('descripcion').value.trim();
 
         // Verificar si algún campo está vacío o tiene valor 0
         if (nombre === '' || codigoId === ''  || stock === '' || precio_compra === null|| precio_compra<0
         || precio_venta === null || precio_venta<0 || measure_id === '' || brand_id ==='' || category_id === '' 
-        || stock_minimo === '' || descripcion === '' || store_id === '') {
+        || stock_minimo === '' || descripcion === '' || provider_id === '') {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -445,7 +467,7 @@
                 category_id:category_id,
                 stock_minimo:stock_minimo,
                 descripcion:descripcion,
-                store_id:store_id,
+                provider_id:provider_id,
             },
             success: function(response) {
                 
@@ -510,4 +532,30 @@ $imgPreview.src = objectURL;
             
 }
 </script>
+<script>
+    function limitDecimalPlaces(e) {
+    let value = e.target.value;
+
+    // Remover cualquier carácter no numérico excepto el punto o coma
+    value = value.replace(/[^0-9.,]/g, '');
+
+    // Reemplazar comas con puntos para normalizar el formato
+    value = value.replace(',', '.');
+
+    // Limitar a 2 decimales
+    if (value.includes('.')) {
+        const parts = value.split('.');
+        parts[1] = parts[1].substring(0, 2); // Limitar a 2 decimales
+        value = parts.join('.');
+    }
+
+    // Actualizar el valor del input
+    e.target.value = value;
+}
+
+// Aplicar la validación en ambos inputs
+document.getElementById('precio_compra').addEventListener('input', limitDecimalPlaces);
+document.getElementById('precio_venta').addEventListener('input', limitDecimalPlaces);
+</script>
+
 @endsection

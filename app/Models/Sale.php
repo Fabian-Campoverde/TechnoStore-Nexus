@@ -10,7 +10,8 @@ class Sale extends Model
     use HasFactory;
 
     protected $fillable = [
-        'comprobante',
+        'invoice_id',
+        'correlativo',
         'fechaEmision',
         'totalVenta',
         'totalPagado',
@@ -24,4 +25,8 @@ class Sale extends Model
         'envio',
         'estado',
     ];
+
+    public function buyer(){
+        return $this->belongsTo(Buyer::class);
+    }
 }

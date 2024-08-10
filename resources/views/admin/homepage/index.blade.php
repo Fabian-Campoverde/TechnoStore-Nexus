@@ -37,11 +37,11 @@
         theme="primary" url="{{ route('admin.measures.index') }}" url-text="Ir allá"/>
     </div>
     <div class="col-md-4">
-        <x-adminlte-small-box title="{{$stores}}" text="Almacenes registrados" icon="fas fa-warehouse text-red"
-        theme="primary" url="{{ route('admin.stores.index') }}" url-text="Ir allá"/>
+        <x-adminlte-small-box title="{{$brands}}" text="Marcas registradas" icon="fas fa-warehouse text-red"
+        theme="primary" url="{{ route('admin.brands.index') }}" url-text="Ir allá"/>
     </div>
 </div>
-<div class="row">
+{{-- <div class="row">
     <div class="col-md-4">
         <x-adminlte-small-box title="{{$buyers}}" text="Clientes registrados" icon="fas fa-id-badge text-lime"
         theme="primary" url="{{ route('admin.buyers.index') }}" url-text="Ir allá"/>
@@ -54,7 +54,7 @@
         <x-adminlte-small-box title="{{$inputs}}" text="Compras registrados" icon="fas fa-shopping-cart text-indigo"
         theme="primary" url="{{ route('admin.inputs.index') }}" url-text="Ir allá"/>
     </div>
-</div>
+</div> --}}
 {{-- <div class="flex space-x-4 " >
     <a href="{{ route('admin.categories.index') }}" class=" hover:underline">
         <div class="bg-white flex items-center border border-gray-200 rounded-t-lg shadow-md max-w-md">

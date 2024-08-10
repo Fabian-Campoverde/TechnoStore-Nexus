@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Provider extends Model
 {
     use HasFactory;
-    protected $fillable = ['razon_social','ruc','nombre','direccion','telefono'];
+    protected $fillable = ['razon_social','ruc','nombre','direccion','telefono','estado'];
 
-    public function inputs(){
-        return $this->hasMany(Input::class);
+    public function products(){
+        return $this->hasMany(Product::class);
     }
+
 }
