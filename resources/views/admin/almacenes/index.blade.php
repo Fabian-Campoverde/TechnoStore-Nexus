@@ -3,7 +3,7 @@
 
 @section('header-new')
     <div class="bg-lime-500 p-4 text-center rounded-lg shadow-lg">
-        <h1 class="text-2xl font-semibold text-white uppercase">Almacenes</h1>
+        <h1 class="text-2xl font-semibold text-white uppercase">Sliders</h1>
     </div>
 @endsection
 @section('css-new')
@@ -19,7 +19,7 @@
     bg-gray-800 border border-transparent rounded-md font-semibold text-xs 
     text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 
     active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 
-    focus:ring-offset-2 transition ease-in-out duration-150 ml-4">{{ __('Agregar nuevo almacen') }}</button>
+    focus:ring-offset-2 transition ease-in-out duration-150 ml-4">{{ __('Agregar nuevo medio de pago') }}</button>
 
         </div>
        <!-- Modal -->
@@ -27,26 +27,26 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Nuevo Almacen</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Nuevo Slider</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <form class="p-4 md:p-5" method="POST" id="formAdd" action="{{ route('admin.stores.store') }}">
+            <form class="p-4 md:p-5" method="POST" id="formAdd" action="{{ route('admin.sliders.store') }}">
                 @csrf
                 <div class="grid gap-4 mb-4 grid-cols-2">
                     <div class="col-span-2">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            <i class="fas fa-layer-group mr-1 my-text-color"></i> Nombre</label>
-                        <input type="text" name="nombre" id="nombre"
+                            <i class="fas fa-layer-group mr-1 my-text-color"></i> Titulo</label>
+                        <input type="text" name="titulo" id="titulo"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="Nombre de almacen" required="">
                     </div>
                     <div class="col-span-2">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            <i class="fas fa-map-marker-alt mr-1 my-text-color"></i> Direccion</label>
-                        <input type="text" name="direccion" id="direccion"
+                            <i class="fas fa-map-marker-alt mr-1 my-text-color"></i> Url</label>
+                        <input type="text" name="url" id="url"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="Direccion de almacen" required="">
                     </div>
@@ -137,49 +137,63 @@
                             <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                                 <th class="py-3 px-6 text-left">Id</th>
                                 <th class="py-3 px-6 text-left">Nombre</th>
-
-                                <th class="py-3 px-6 text-center">Direccion</th>
+                                <th class="py-3 px-6 text-center">Instrucciones</th>
+                                <th class="py-3 px-6 text-center">Tipo</th>
+                                <th class="py-3 px-6 text-center">Comisión</th>
                                 <th class="py-3 px-6 text-center">Estado</th>
                                 <th class="py-3 px-6 text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
-                            @foreach ($stores as $item)
+                            @foreach ($metodos_pago as $m)
                                 <tr class="border-b border-gray-200 hover:bg-gray-100">
                                     <td class="py-3 px-6 text-left whitespace-nowrap">
                                         <div class="flex items-center">
                                             <div class="mr-2">
                                                
                                             </div>
-                                            <span class="font-medium">{{ $item->id }}</span>
+                                            <span class="font-medium">{{ $m->id }}</span>
                                         </div>
                                     </td>
-                                    <td class="py-3 px-6 text-left">
-                                        <div class="flex items-center">
-                                            <div class="mr-2">
-
-                                            </div>
-                                            <span>{{ $item->nombre }}</span>
-                                        </div>
-                                    </td>
+                                    <th scope="row" class="flex items-center justify-center px-6 py-4 text-center text-gray-900 whitespace-nowrap dark:text-white">
+                        
+                                        <div class="mr-2">
+                                          <img class="w-10 h-10 rounded-pill zoom" src="{{asset($m->imagen)}}" 
+                                          />
+                                      </div>
+                                          <div class="pl-3">
+                                              <div class="text-base font-semibold">{{$m->nombre}} </div>
+                                              
+                                          </div> 
+                                          
+                                      </th>
+                                    
 
                                     <td class="py-3 px-6 text-center">
                                         <span
-                                            class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $item->direccion }}</span>
+                                            class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $m->instrucciones }}</span>
+                                    </td>
+                                    <td class="py-3 px-6 text-center">
+                                        <span
+                                            class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $m->tipo }}</span>
+                                    </td>
+                                    <td class="py-3 px-6 text-center">
+                                        <span
+                                            class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $m->tasa_transaccion }} %</span>
                                     </td>
                                     <td class="py-3 px-6 text-center">
                                         <span
                             class="relative inline-block px-3 py-1 font-semibold text-gray-900 leading-tight">
                             <span aria-hidden
                                 class="absolute inset-0 
-                                @if ($item->estado==='A')
+                                @if ($m->estado==='A')
                                 bg-green-200
                             @else
                             bg-red-200
                             @endif
                              opacity-50 rounded-full"></span>
                         <span class="relative">
-                            @if ($item->estado==='A')
+                            @if ($m->estado==='A')
                             Activo  
                             @else
                             Inactivo
@@ -191,9 +205,9 @@
                                     <td class="py-3 px-6 text-center">
                                         <div class="flex item-center justify-center">
                                             <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                                @if ($item->estado==='A')
+                                                @if ($m->estado==='A')
                                                 <button class="inline-flex items-center desactivar" 
-                                                data-almacen-id="{{ $item->id }}"
+                                                data-almacen-id="{{ $m->id }}"
                                             id="deactivateCategoryButton" title="Desactivar almacen">
                                                 <svg class="w-3 h-3 text-red-500 dark:text-white" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -201,7 +215,7 @@
                                             </button>  
                             @else
                             <button class="inline-flex items-center activar" 
-                                                data-almacen-id="{{ $item->id }}"
+                                                data-almacen-id="{{ $m->id }}"
                                             id="activateCategoryButton" title="Activar almacen">
                                                 <svg class="w-3 h-3 text-green-500 dark:text-white" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
@@ -213,9 +227,9 @@
                                             <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                                 
                                                 <button class="inline-flex items-center editar-almacen"
-                                                    id="readProductButton" data-almacen-id="{{ $item->id }}"
-                                                    data-almacen-nombre="{{ $item->nombre }}"
-                                                    data-almacen-direccion="{{ $item->direccion }}"
+                                                    id="readProductButton" data-almacen-id="{{ $m->id }}"
+                                                    data-almacen-nombre="{{ $m->nombre }}"
+                                                    data-almacen-direccion="{{ $m->nombre }}"
                                                     data-toggle="modal" data-target="#editModal">
                                                     <svg class="w-5 h-4" xmlns="http://www.w3.org/2000/svg"
                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -228,12 +242,12 @@
                                             <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
 
                                                 <form class="form-delete"
-                                                    action="{{ route('admin.stores.destroy', ['store' => $item->id]) }}"
+                                                    action="{{ route('admin.payment_methods.destroy', ['paymentMethod' => $m->id]) }}"
                                                     method="post" x-data>
                                                     @csrf
                                                     {{ method_field('DELETE') }}
                                                     <input type="hidden" name="store_name"
-                                                        value="{{ $item->nombre }}">
+                                                        value="{{ $m->nombre }}">
                                                     <button type="submit" class="inline-flex items-center">
                                                         <svg class="w-5 h-4" xmlns="http://www.w3.org/2000/svg"
                                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -357,7 +371,7 @@
                         // Establecer la acción del formulario para editar la categoría
                         const editForm = $('#editForm');
                         const actionUrl =
-                            "{{ route('admin.stores.update', ['store' => ':store']) }}";
+                            "{{ route('admin.payment_methods.update', ['payment_method' => ':store']) }}";
                         const updatedActionUrl = actionUrl.replace(':store', almacenId);
                         editForm.attr('action', updatedActionUrl);
 

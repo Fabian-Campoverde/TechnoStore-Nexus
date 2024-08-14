@@ -376,15 +376,6 @@ return [
             'route'  => 'admin.providers.index',
             'icon' => 'fas fa-fw fa-truck',
 
-            // 'submenu' => [
-            //     [
-            //         'text' => 'Administrar Proveedores',
-            //         'route'  => 'admin.providers.index',
-            //     ],
-            //     [
-            //         'text' => 'Crear Proveedores',
-            //         'route'  => 'admin.providers.create',
-            //     ],]
         ],
         [
             'text' => 'Productos',
@@ -401,21 +392,29 @@ return [
                     'route'  => 'admin.products.create',
                 ],]
         ],
-        [
-            'text' => 'Compras',
-            'route'  => 'admin.inputs.index',
-            'icon' => 'fas fa-fw fa-shopping-bag',
+        // [
+        //     'text' => 'Compras',
+        //     'route'  => 'admin.inputs.index',
+        //     'icon' => 'fas fa-fw fa-shopping-bag',
            
-            'submenu' => [
-                [
-                    'text' => 'Entradas de Productos',
-                    'route'  => 'admin.inputs.index',
-                ],
-                [
-                    'text' => 'Detalles de Entradas',
-                    'route'  => 'admin.inputs.create',
-                ],]
-        ],       
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Entradas de Productos',
+        //             'route'  => 'admin.inputs.index',
+        //         ],
+        //         [
+        //             'text' => 'Detalles de Entradas',
+        //             'route'  => 'admin.inputs.create',
+        //         ],]
+        // ],  
+        ['header' => 'DISEÑO'],
+        [
+            'text' => 'Sliders',
+            'route'  => 'admin.sliders.index',
+            'icon' => 'fas fa-solid fa-images',
+            'can'=>'admin.measures.index',
+            
+        ],
          ['header' => 'VENTAS'],
          [
             'text' => 'Clientes',
@@ -425,12 +424,12 @@ return [
             
         ],
         [
-            'text' => 'Comprobantes',
-            'route'  => 'admin.invoices.index',
-            'icon' => 'fas fa-fw fa-file-invoice-dollar',
-            'can'=>'admin.measures.index',
-            
-        ],
+                'text' => 'Medios de pago',
+                'route'  => 'admin.payment_methods.index',
+                'icon' => 'fas fa-solid fa-comments-dollar',
+                'can'=>'admin.measures.index',
+                
+            ]
         // [
         //     'text' => 'Ventas',
         //     'route'  => 'admin.sales.index',

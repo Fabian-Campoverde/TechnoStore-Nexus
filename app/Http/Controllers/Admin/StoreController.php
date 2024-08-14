@@ -13,8 +13,8 @@ class StoreController extends Controller
      */
     public function index()
     {
-        $stores= Store::all();
-        return view("admin.almacenes.index", compact("stores"));
+        // $stores= Store::all();
+        // return view("admin.almacenes.index", compact("stores"));
     }
 
   

@@ -10,6 +10,7 @@
 
 @section('css-2')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.css" rel="stylesheet">
 <style>
     span.selection,
  span.select2-selection,
@@ -34,7 +35,15 @@ input[type="text"] {
     border-radius: 0 0.25rem 0.25rem 0;
     border-left: none;
 }
+.note-editable ul {
+    list-style-type: disc; /* Para listas con puntos */
+    margin-left: 20px; /* Ajusta la indentación */
+}
 
+.note-editable ol {
+    list-style-type: decimal; /* Para listas numeradas */
+    margin-left: 20px; /* Ajusta la indentación */
+}
  </style>
 @endsection
 
@@ -308,6 +317,22 @@ input[type="text"] {
 
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#descripcion').summernote({
+            height: 200,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['view', ['undo', 'redo', 'codeview']]
+            ],
+        });
+    });
+</script>
 <script>
     $(document).ready(function () {
             $('#category_id').select2({

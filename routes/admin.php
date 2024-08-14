@@ -7,10 +7,12 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\InputController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\MeasureController;
+use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SaleController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -32,8 +34,12 @@ Route::put('admin/measures/{measure}/status', [MeasureController::class,'status'
 Route::resource("/brands",BrandController::class)->names("admin.brands");
 Route::put('admin/brands/{brand}/status', [BrandController::class,'status'])->name('admin.brands.status');
 
-// Route::resource("/stores",StoreController::class)->names("admin.stores");
-// Route::put('admin/stores/{store}/status', [StoreController::class,'status'])->name('admin.stores.status');
+Route::resource("/payment_methods",PaymentMethodController::class)->names("admin.payment_methods");
+Route::put('admin/payment_methods/{payment_method}/status', [PaymentMethodController::class,'status'])->name('admin.payment_methods.status');
+
+Route::resource("/sliders",SliderController::class)->names("admin.sliders");
+Route::put('admin/sliders/{slider}/status', [SliderController::class,'status'])->name('admin.sliders.status');
+
 
 Route::resource("/buyers",BuyerController::class)->names("admin.buyers");
 

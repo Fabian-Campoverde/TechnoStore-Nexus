@@ -27,7 +27,14 @@
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.9.0/tailwind.min.css" integrity="sha512-wOgO+8E/LgrYRSPtvpNg8fY7vjzlqdsVZ34wYdGtpj/OyVdiw5ustbFnMuCb75X9YdHHsV5vY3eQq3wCE4s5+g==" crossorigin="anonymous" />
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
+<style>
+    .zoom:hover {
+        transform: scale(1.2);
+    }
+    .zoom {
+        transition: transform 0.3s ease-in-out;
+    }
+</style>
 <style>
     /*Overrides for Tailwind CSS */
 
