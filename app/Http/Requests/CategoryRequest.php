@@ -23,7 +23,9 @@ class CategoryRequest extends FormRequest
     {
         return [
             "nombre"=> ["required","unique:categories"],
-            "descripcion"=> ["required"],
+            "descripcion"=> 'nullable|string',
+            'imagen'=> ["image"],
+            
             
         ];
     }

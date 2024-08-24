@@ -32,7 +32,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                    <form class="p-4 md:p-5" method="POST" id="formAdd" action="{{ route('admin.brands.store') }}">
+                    <form class="p-4 md:p-5" method="POST" id="formAdd" action="{{ route('admin.brands.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="grid gap-4 mb-4 grid-cols-2">
                             <div class="col-span-2">
@@ -43,6 +43,40 @@
                                     placeholder="Nombre de marca" required="">
                             </div>
                            
+                        </div>
+                        <div class="sm:col-span-2">
+                            <div class="row">
+                                <div class="col ">
+                                    <div class="form-group">
+                                        <label class="block mb-6">                               
+                                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imagen</label>
+                                            <input name="imagen" id="imagen" type="file"  accept="image/*" onchange="previewImage(event, '#imgPreview')" 
+                                                class="
+                                          block
+                                          w-full
+                                          mt-1
+                                          focus:border-indigo-300
+                                          focus:ring
+                                          focus:ring-indigo-200
+                                          focus:ring-opacity-50
+                                        " />                                       
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col text-center ">
+                                    <div class="form-group" style="margin-top:8px;">
+                                      <figure class="figure">
+                                        <div class="text-center" id="updimagepreview">
+                                            <img id="imgPreview" src="//placehold.it/100?text=IMAGEN" class="" id="updpreview" width="90px" height="80px">
+                                        </div>
+                                        <figcaption class="figure-caption">Imagen nueva</figcaption>
+                                      </figure>
+                                    </div>
+                                </div>
+                                
+                                
+                                
+                                </div>
                         </div>
                         <button id="submitButton" type="submit" style="display: none;"></button>
                     </form>
@@ -73,9 +107,10 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                    <form class="p-4 md:p-5" method="POST" id="editForm">
+                    <form class="p-4 md:p-5" method="POST" id="editForm" enctype="multipart/form-data">
                         {{ method_field('PUT') }}
                         @csrf
+                        <input type="hidden" name="idEdit" id="idEdit">
                         <div class="grid gap-4 mb-4 grid-cols-2">
                             <div class="col-span-2">
                                 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -85,6 +120,54 @@
                                     placeholder="Nombre de marca" required="">
                             </div>
                            
+                        </div>
+                        <div class="sm:col-span-2">
+                            <div class="row">
+                                <div class="col ">
+                                    <div class="form-group">
+                                        <label class="block mb-6">
+
+                                            <label for="name"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imagen</label>
+                                            <input name="imagen1" id="imagen1" type="file" accept="image/*"
+                                                onchange="previewImage(event, '#imgPreview1')"
+                                                class="
+                      block
+                      w-full
+                      mt-1
+                      focus:border-indigo-300
+                      focus:ring
+                      focus:ring-indigo-200
+                      focus:ring-opacity-50
+                    " />
+
+
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col text-center ">
+                                    <div class="form-group" style="margin-top:8px;">
+                                        <figure class="figure">
+                                            <div class="text-center" id="updimagepreview">
+                                                <img id="imgPreview1" src="//placehold.it/100?text=IMAGEN"
+                                                    class="" id="updpreview" width="90px"
+                                                    height="80px">
+                                            </div>
+                                            <figcaption class="figure-caption">Imagen nueva</figcaption>
+                                        </figure>
+                                    </div>
+                                </div>
+
+                                <div class="col text-center ">
+                                    <div class="form-group" style="margin-top:8px;">
+                                        <figure class="figure">
+                                            <img src="" height="80px" width="90px" id="imagenEdit">
+                                            <figcaption class="figure-caption">Imagen actual</figcaption>
+                                        </figure>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                         <button id="submitButtonEdit" type="submit" style="display: none;"></button>
                     </form>
@@ -198,6 +281,7 @@
                                                 <button class="inline-flex items-center editar-marca"
                                                     id="readProductButton" data-marca-id="{{ $item->id }}"
                                                     data-marca-nombre="{{ $item->nombre }}"
+                                                    data-marca-imagen="{{ $item->imagen }}"
                                                     data-toggle="modal" data-target="#editModal">
                                                     <svg class="w-5 h-4" xmlns="http://www.w3.org/2000/svg"
                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -317,19 +401,21 @@
                 $('#example tbody').on('click', '.editar-marca', function() {
                     
                         // Obtener datos de la categoría seleccionada
-                        const medidaId = $(this).data('marca-id');
-                        const medidaNombre = $(this).data('marca-nombre');
-
+                        const marcaId = $(this).data('marca-id');
+                        const marcaNombre = $(this).data('marca-nombre');
+                        const marcaImagen = $(this).data('marca-imagen');
+                        const imagenUrl = marcaImagen ? `{{ asset('${marcaImagen}') }}` : '';
 
                         // Rellenar el formulario en el modal con los datos obtenidos
-                        $('#nombreEdit').val(medidaNombre);
-
+                        $('#nombreEdit').val(marcaNombre);
+                        $('#imagenEdit').attr('src', imagenUrl);
+                        $('#idEdit').val(marcaId);
 
                         // Establecer la acción del formulario para editar la categoría
                         const editForm = $('#editForm');
                         const actionUrl =
                             "{{ route('admin.brands.update', ['brand' => ':brand']) }}";
-                        const updatedActionUrl = actionUrl.replace(':brand', medidaId);
+                        const updatedActionUrl = actionUrl.replace(':brand', marcaId);
                         editForm.attr('action', updatedActionUrl);
 
 
@@ -431,23 +517,69 @@ $('#example tbody').on('click', '.activar', function() {
             function validarFormulario() {
                 // Obtener los valores de los campos
                 const nombre = document.getElementById('nombre').value.trim();
+                const input = document.getElementById('imagen');
+                let imagen = ''; 
 
+                if (input.files && input.files.length > 0) {
+                imagen = input.files[0];
+                }
 
 
                 // Verificar si algún campo está vacío o tiene valor 0
-                if (nombre === '') {
+                if (nombre === '' || imagen === '') {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
                         text: 'Por favor, completa todos los campos antes de continuar.',
                     });
                 } else {
-                    // Validar el formato JSON del campo "detalles"
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/brands', // Reemplaza esto con la URL de tu controlador y método
+                        data: {
+                            _token: '{{ csrf_token() }}', // Agrega el token CSRF de Laravel si es necesario
+                            nombre: nombre,
+                            
 
-                    const submitButton = document.getElementById('submitButton');
-                    if (submitButton) {
-                        submitButton.click();
-                    }
+
+
+                        },
+                        success: function(response) {
+
+                            const submitButton = document.getElementById('submitButton');
+                            if (submitButton) {
+                                submitButton.click();
+                            }
+
+                        },
+                        error: function(xhr) {
+                            if (xhr.status === 422) {
+                                const response = xhr.responseJSON;
+                                if (response && response.errors) {
+                                    let errorMessage = '';
+
+                                    if (Array.isArray(response.errors)) {
+                                        errorMessage = response.errors.join('\n');
+                                    } else if (typeof response.errors === 'object') {
+                                        errorMessage = Object.values(response.errors).join('\n');
+                                    } else {
+                                        errorMessage = response.errors.toString();
+                                    }
+
+                                    // Manejar los errores de validación
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error de validación',
+                                        text: errorMessage,
+                                    });
+                                } else {
+                                    console.error('Respuesta inválida:', response);
+                                }
+                            } else {
+                                console.error('Error en la petición AJAX:', xhr);
+                            }
+                        }
+                    });
 
                 }
             }
@@ -455,7 +587,15 @@ $('#example tbody').on('click', '.activar', function() {
             function validarFormularioEdit() {
                 // Obtener los valores de los campos
                 const nombre = document.getElementById('nombreEdit').value.trim();
+                const id = document.getElementById('idEdit').value.trim();
+                const imagenEditElement = document.getElementById('imagenEdit');
+                const imagenEdit = imagenEditElement.getAttribute('src').trim();
+                const input = document.getElementById('imagen1');
+                let imagen = '';
 
+                if (input.files && input.files.length > 0) {
+                    imagen = input.files[0];
+                }
 
 
                 // Verificar si algún campo está vacío o tiene valor 0
@@ -465,15 +605,86 @@ $('#example tbody').on('click', '.activar', function() {
                         title: 'Oops...',
                         text: 'Por favor, completa todos los campos antes de continuar.',
                     });
+                } else if (imagenEdit === '' && imagen === '') {
+                    // Verificar si ambas imágenes están vacías
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Debes proporcionar una imagen existente o subir una nueva.',
+                    });
                 } else {
-                    // Validar el formato JSON del campo "detalles"
+                    $.ajax({
+                        type: 'POST', 
+                        url: '/admin/brands/' + id, 
+                        data: {
+                            _token: '{{ csrf_token() }}', // Token CSRF para seguridad
+                            _method: 'PUT',
+                            nombre: nombre,
+                            
+                            
+                        },
+                        success: function(response) {
 
-                    const submitButton = document.getElementById('submitButtonEdit');
-                    if (submitButton) {
-                        submitButton.click();
-                    }
+                            const submitButton = document.getElementById('submitButtonEdit');
+                            if (submitButton) {
+                                submitButton.click();
+                            }
+
+                        },
+                        error: function(xhr) {
+                            if (xhr.status === 422) {
+                                const response = xhr.responseJSON;
+                                if (response && response.errors) {
+                                    let errorMessage = '';
+
+                                    if (Array.isArray(response.errors)) {
+                                        errorMessage = response.errors.join('\n');
+                                    } else if (typeof response.errors === 'object') {
+                                        errorMessage = Object.values(response.errors).join('\n');
+                                    } else {
+                                        errorMessage = response.errors.toString();
+                                    }
+
+                                    // Manejar los errores de validación
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error de validación',
+                                        text: errorMessage,
+                                    });
+                                } else {
+                                    console.error('Respuesta inválida:', response);
+                                }
+                            } else {
+                                console.error('Error en la petición AJAX:', xhr);
+                            }
+                        }
+                    });
+
 
                 }
+            }
+        </script>
+        <script>
+            function previewImage(event, querySelector) {
+
+                //Recuperamos el input que desencadeno la acción
+                const input = event.target;
+
+                //Recuperamos la etiqueta img donde cargaremos la imagen
+                $imgPreview = document.querySelector(querySelector);
+
+                // Verificamos si existe una imagen seleccionada
+                if (!input.files.length) return
+
+                //Recuperamos el archivo subido
+                file = input.files[0];
+
+                //Creamos la url
+                objectURL = URL.createObjectURL(file);
+
+                //Modificamos el atributo src de la etiqueta img
+                $imgPreview.src = objectURL;
+
             }
         </script>
     @endsection

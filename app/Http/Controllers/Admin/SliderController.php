@@ -69,7 +69,7 @@ class SliderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Slider $slider)
+    public function update(SliderRequest $request, Slider $slider)
     {
         $data=$request->all();
         if($request->has("imagen")){
@@ -118,9 +118,5 @@ class SliderController extends Controller
         return response()->json(['message' => 'Slider modificado exitosamente']);
     }
 
-    public function welcome()
-{
-    $sliders = Slider::where('estado', 'A')->get(); 
-    return view('welcome', compact('sliders'));
-}
+    
 }

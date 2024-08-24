@@ -31,6 +31,8 @@ class User extends Authenticatable
         'email',
         'password',
         'nickname',
+        'documento',
+        'nro_doc',
         'image_url',
         'profile_photo_path'
     ];

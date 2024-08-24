@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\InputController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\MeasureController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProviderController;
@@ -44,7 +45,7 @@ Route::put('admin/sliders/{slider}/status', [SliderController::class,'status'])-
 Route::resource("/buyers",BuyerController::class)->names("admin.buyers");
 
 
-Route::resource("/invoices",InvoiceController::class)->names("admin.invoices");
+Route::resource("/orders",OrderController::class)->names("admin.orders");
 
 Route::resource("/users",UserController::class)->names("admin.users");
 

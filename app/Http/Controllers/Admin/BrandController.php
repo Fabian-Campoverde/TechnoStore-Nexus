@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BrandRequest;
 use App\Models\brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class BrandController extends Controller
 {
@@ -28,10 +32,15 @@ class BrandController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BrandRequest $request)
     {
         $data= $request->all();
-        Brand::create($data);
+        if($request->has("imagen")){
+            $image_path=$request->file("imagen")->store("medias");
+            $data["imagen"]=$image_path;
+            Brand::create($data);
+            }
+        
         return redirect()->route("admin.brands.index")->with(
             [
                 "message"=> "Marca creada con exito",
@@ -62,7 +71,31 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        $data= $request->all();
+        // Validar el request con un validador manual
+    $validator = Validator::make($request->all(), [
+        'nombre' => [
+            'required',
+            Rule::unique('brands')->ignore($brand->id),
+        ],
+        // Otras reglas de validación...
+    ]);
+
+    // Si la validación falla, devolver una respuesta JSON con el error 422
+    if ($validator->fails()) {
+        return response()->json([
+            'errors' => $validator->errors()
+        ], 422);
+    }
+        $data=$request->all();
+        if($request->has("imagen1")){
+            if ($brand->imagen) {
+                Storage::delete($brand->imagen);
+            }
+        
+            // Almacenar la nueva imagen y actualizar el campo "imagen" en los datos
+            $image_path = $request->file('imagen1')->store('medias');
+            $data['imagen'] = $image_path;
+        }
         $brand->fill($data);
         $brand->save();
         return redirect()->route('admin.brands.index')->with(

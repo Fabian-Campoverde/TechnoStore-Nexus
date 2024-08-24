@@ -31,7 +31,7 @@ class ProductUpdateRequest extends FormRequest
             "brand_id"=> "required|numeric",
             "measure_id"=> "required|numeric",
             "stock_minimo"=> "numeric|min:0",
-            "descripcion"=> "required|max:300",
+            "descripcion"=> "required",
             "provider_id"=> "required|numeric",
             'image_url'=> 'image'
         ];
